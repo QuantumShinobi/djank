@@ -1,0 +1,2 @@
+# django-bank
+Django Bank
