@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock title %}
+
+{% block body %}
+{% if error %}
+  
+<h1  class="has-text-weight-bold   has-text-centered is-size-1">{{ error}}</h1>{% endif %}
+<form action="{% url 'main:logged_in' %}" method="post">
+{% csrf_token %}
+<h1  class="has-text-weight-bold   has-text-centered is-size-1">Login</h1>
+<label for="username" class="has-text-weight-medium  has-text-centered is-size-5">Username:</label>
+<input name="username" id="username" type="text" placeholder="Enter your username" required>
+
+<br><br><br>
+<label class="has-text-weight-medium  has-text-centered is-size-5" for="password">Password:</label>
+<input type="password" placeholder="Password" name="password" id="password">
+<br><input type="submit" value="Login" required>
+
+</form>
+<a href="{% url 'main:signup'%}">Don't have an account yet ? <br> Signup</a>
+
+{% endblock body %}

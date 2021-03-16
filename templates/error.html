@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" class="has-background-primary-light">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error!!!!⚠</title>
+           <link
+             rel="stylesheet"
+             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+             integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+             crossorigin="anonymous"
+           />
+       <style>
+       body{
+         padding:5%;
+       }
+       </style>
+         
+</head>
+<body class="p-6 has-background-primary-light">
+    
+    <div class="alert alert-danger" role="alert">
+{% block error %}{% endblock error %}
+</div>
+<a href="{% url 'main:login'%}">Login Page</a>
+<a href="{% url 'main:signup'%}">Signup Page</a>
+<a href="{% url 'main:index'%}">Index Page</a>
+</body>
+</html>
