@@ -4,13 +4,13 @@
 
 {% if user %}
 <h1 class="has-text-weight-medium">Hi {{user.username}}</h1>
-<h2>Here's your bank balance {{user.bank_balance}}</h2>
+<h2>Your bank balance is <span class="text-success">${{user.bank_balance}}</h2></span>
 {% else %}
 <h1>Hi</h1>
 {% endif %}
 
-
-<a href="{% url 'main:logout'%}">Logout</a>
+<br><br>
+<a class="btn btn-danger" href="{% url 'main:logout'%}">Logout</a>
 
 
 {% endblock body %}

@@ -41,7 +41,8 @@ def singed_up(request):
                     return render(request, "main/signup.html", context={'error': "Password should be atleast 8 characters long"})
                 new_user = User.objects.create(
                     username=username, password=password)
-                response = render(request, 'main/redirect.html')
+                response = render(request, 'main/logout.html',
+                                  context={"title": "Sign up", "text": "Creating your account"})
                 response.set_cookie("user-identity", str(new_user.unique_id))
                 return response
         else:
@@ -67,7 +68,8 @@ def logged_in(request):
         if User.objects.filter(username=username).exists() == True:
             user = User.objects.get(username=username)
             if password == user.password:
-                response = render(request, 'main/redirect.html')
+                response = render(request, 'main/logout.html',
+                                  context={"title": "Login", "text": "Logging you in"})
                 response.set_cookie("user-identity", str(user.unique_id))
                 return response
             else:
@@ -85,6 +87,7 @@ def logout(request):
         return redirect("main:index")
 
     else:
-        response = render(request, 'main/logout.html',)
+        response = render(request, 'main/logout.html',
+                          context={"title": "Logout", "text": "Logging you out"})
         response.delete_cookie("user-identity")
         return response
