@@ -1,0 +1,5 @@
+body {
+  padding: 5%;
+  transition-duration: 2s;
+  scroll-behavior: smooth;
+}
