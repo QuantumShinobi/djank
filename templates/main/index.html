@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
 {% block title %}Index{% endblock title %}
 {% block body %}
+{% load static %}
+<script src="{% static 'bank.js' %}"></script>
 
+
+{% comment %}  Main output {% endcomment %}
+<div id="main" style="display:block;">
 {% if user %}
 <h1 class="has-text-weight-medium">Hi {{user.username}}</h1>
 <h2>Your bank balance is <span class="text-success">${{user.bank_balance}}</h2></span>
@@ -10,7 +15,77 @@
 {% endif %}
 
 <br><br>
+<button class="btn btn-primary" onclick="show()">
+Perform Transactions
+</button>
+<br><br>
 <a class="btn btn-danger" href="{% url 'main:logout'%}">Logout</a>
+</div>
 
 
+{% comment %} Transactions form {% endcomment %}
+
+<div style="display:none;" id="transactions">
+<button class="btn btn-primary" onclick="add()">
+Add money
+</button>
+<button class="btn btn-primary" onclick="withdraw()">
+Withdraw Money
+</button>
+<button class="btn btn-primary" onclick="back()">
+Go back
+</button>
+</div>
+
+
+{% comment %} Add money form {% endcomment %}
+
+<div style="display:none;" id="add">
+<form action="{% url 'main:add' %}" method="post">
+{% csrf_token %}
+<div class="row g-1 align-items-center">
+  <div class="col-auto">
+<b><label class="has-text-weight-bold  has-text-centered is-size-5" for="add_amount">Amount to add</label></b>
+<input class="form-control" type="text" placeholder="Amount to add" name="add_amount" id="add_amount" required>
+<br>
+<input class="btn btn-primary"type="submit" value="Add money">
+  </div>
+  </div>
+
+<br>
+
+</form>
+<button class="btn btn-primary" onclick="back()">
+Go back
+</button>
+</div>
+
+
+{% comment %} Withdraw form {% endcomment %}
+
+<div style="display:none;" id="withdraw">
+<form action="{% url 'main:withdraw' %}" method="post">
+{% csrf_token %}
+<div class="row g-1 align-items-center">
+  <div class="col-auto">
+<b><label class="has-text-weight-bold  has-text-centered is-size-5" for="withdraw_amount">Amount to withdraw</label></b>
+<input class="form-control" type="text" placeholder="Amount to withdraw" name="withdraw_amount" id="withdraw_amount" required>
+<br>
+<input class="btn btn-primary"type="submit" value="withdraw money">
+  </div>
+  </div>
+
+<br>
+
+</form>
+<button class="btn btn-primary" onclick="back()">
+Go back
+</button>
+
+
+
+<button class="btn btn-primary" onclick="back()">
+Go back
+</button>
+</div>
 {% endblock body %}

@@ -14,17 +14,18 @@
        <style>
        body{
          padding:5%;
+         background-image: url("https://thumbs.dreamstime.com/b/error-message-glitch-system-failure-vector-illustration-black-effect-background-104459290.jpg");
        }
        </style>
          
 </head>
 <body class="p-6 has-background-primary-light">
     
-    <div class="alert alert-danger" role="alert">
-{% block error %}{% endblock error %}
+<div class="alert alert-danger" role="alert">
+{% if error %}
+{{error}}{% endif %}
 </div>
-<a href="{% url 'main:login'%}">Login Page</a>
-<a href="{% url 'main:signup'%}">Signup Page</a>
-<a href="{% url 'main:index'%}">Index Page</a>
+<a class="btn btn-info" href="{% url 'main:index'%}">Back</a>
+<br><br>
 </body>
 </html>

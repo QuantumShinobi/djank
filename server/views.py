@@ -90,3 +90,30 @@ def logout(request):
                           context={"title": "Logout", "text": "Logging you out"})
         response.delete_cookie("user-identity")
         return response
+
+
+def add(request):
+    if request.method == "POST":
+        money_to_add = request.POST['add_amount']
+        id = request.COOKIES['user-identity']
+        user = User.objects.get(unique_id=id)
+        user.bank_balance += int(money_to_add)
+        user.save()
+        return redirect("main:index")
+    else:
+        return render(request, "error.html", context={"error": "Access Denied"})
+
+
+def withdraw(request):
+    if request.method == "POST":
+        money_to_withdraw = request.POST['withdraw_amount']
+        id = request.COOKIES['user-identity']
+        user = User.objects.get(unique_id=id)
+        if int(money_to_withdraw) > user.bank_balance:
+            return render(request, "error.html", context={"error": "How can your withdraw amount be greater than your bank balance"})
+        else:
+            user.bank_balance -= int(money_to_withdraw)
+            user.save()
+        return redirect("main:index")
+    else:
+        return render(request, "error.html", context={"error": "Access Denied"})
