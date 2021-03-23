@@ -8,7 +8,7 @@
 {% comment %}  Main output {% endcomment %}
 <div id="main" style="display:block;">
 {% if user %}
-<h1 class="has-text-weight-medium">Hi {{user.username}}</h1>
+<h1 class="has-text-weight-medium">Hi {{user.name}}</h1>
 <h2>Your bank balance is <span class="text-success">${{user.bank_balance}}</h2></span>
 {% else %}
 <h1>Hi</h1>
@@ -78,12 +78,6 @@ Go back
 <br>
 
 </form>
-<button class="btn btn-primary" onclick="back()">
-Go back
-</button>
-
-
-
 <button class="btn btn-primary" onclick="back()">
 Go back
 </button>

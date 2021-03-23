@@ -21,3 +21,5 @@ urlpatterns = [
     path('site/', include('server.urls')),
     path('', include('redirect.urls'))
 ]
+handler404 = 'redirect.views.error_404'
+handler500 = 'redirect.views.server_error'

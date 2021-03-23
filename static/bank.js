@@ -5,14 +5,7 @@ function show() {
   to_hide.style.display = "none";
 }
 function back() {
-  to_hide = document.getElementById("transactions");
-  to_hide.style.display = "none";
-  div = document.getElementById("main");
-  div.style.display = "block";
-  add = document.getElementById("add");
-  withdraw = document.getElementById("withdraw");
-  add.style.display = "none";
-  withdraw.style.display = "none";
+  location.reload();
 }
 
 function add() {

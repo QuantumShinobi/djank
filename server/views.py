@@ -1,17 +1,25 @@
+import bcrypt
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from .models import *
+from .gen import *
 # Create your views here.
 
 
 def index(request):
     try:
         request.COOKIES['user-identity']
-    except KeyError:
+    except (KeyError):
         return redirect("main:login")
     else:
         id = request.COOKIES['user-identity']
-        user = User.objects.get(unique_id=id)
+        try:
+            user = User.objects.get(unique_id=id)
+        except User.DoesNotExist:
+            res = render(request, "main/logout.html",
+                         context={"text": "Loading"})
+            res.delete_cookie("user-identity")
+            return res
 
     return render(request, 'main/index.html', context={"user": user})
 
@@ -33,13 +41,18 @@ def singed_up(request):
         except KeyError:
             username = request.POST['username']
             password = request.POST['password']
+            name = request.POST['name']
             if User.objects.filter(username=username).exists() == True:
                 return render(request, "main/signup.html", context={'error': "Username has already been taken"})
             else:
                 if len(password) < 8:
                     return render(request, "main/signup.html", context={'error': "Password should be atleast 8 characters long"})
+                hash_pwd = bcrypt.hashpw(
+                    bytes(password, 'utf-8'), bcrypt.gensalt())
+                name = name.capitalize()
                 new_user = User.objects.create(
-                    username=username, password=password)
+
+                    username=username, password=hash_pwd, name=name)
                 response = render(request, 'main/logout.html',
                                   context={"title": "Sign up", "text": "Creating your account"})
                 response.set_cookie("user-identity", str(new_user.unique_id))
@@ -66,9 +79,11 @@ def logged_in(request):
         password = request.POST['password']
         if User.objects.filter(username=username).exists() == True:
             user = User.objects.get(username=username)
-            if password == user.password:
+            hash_pwd = user.password
+            if bcrypt.checkpw(bytes(password, 'utf-8'), hash_pwd):
                 response = render(request, 'main/logout.html',
                                   context={"title": "Login", "text": "Logging you in"})
+                # cookie_to_set =
                 response.set_cookie("user-identity", str(user.unique_id))
                 return response
             else:
@@ -97,8 +112,11 @@ def add(request):
         money_to_add = request.POST['add_amount']
         id = request.COOKIES['user-identity']
         user = User.objects.get(unique_id=id)
-        user.bank_balance += int(money_to_add)
-        user.save()
+        try:
+            user.bank_balance += int(money_to_add)
+            user.save()
+        except ValueError:
+            return render(request, "error.html", context={"error": "How can u add a non-number field to your bank balance ?"})
         return redirect("main:index")
     else:
         return render(request, "error.html", context={"error": "Access Denied"})
@@ -109,6 +127,11 @@ def withdraw(request):
         money_to_withdraw = request.POST['withdraw_amount']
         id = request.COOKIES['user-identity']
         user = User.objects.get(unique_id=id)
+        try:
+            money_to_withdraw = int(money_to_withdraw)
+        except ValueError:
+            return render(request, "error.html", context={"error": "How can u withdraw a non-number field to your bank balance ?"})
+
         if int(money_to_withdraw) > user.bank_balance:
             return render(request, "error.html", context={"error": "How can your withdraw amount be greater than your bank balance"})
         else:
