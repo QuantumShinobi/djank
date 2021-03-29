@@ -4,4 +4,6 @@ import os
 
 
 class TestUser(TestCase):
-    print(os.getenv("GITHUB_WORKFLOW"))
+    def test_env_vars():
+
+        print(os.getenv("GITHUB_WORKFLOW"))
