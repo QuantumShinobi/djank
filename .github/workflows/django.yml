@@ -17,8 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
-        env: # Or as an environment variable
-          SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK }}
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
