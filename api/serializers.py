@@ -13,3 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'bank_balance', 'name', 'unique_id')
+
+
+class DiscordAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Discord_Account
+        fields = ("user", 'discord_username',
+                  'discord_id', 'bot_key')

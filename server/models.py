@@ -22,3 +22,4 @@ class Discord_Account(models.Model):
         editable=True, max_length=37, default=None, null=True)
     is_verified = models.BooleanField(default=False, null=False)
     discord_id = models.IntegerField(default=None)
+    bot_key = models.CharField(max_length=200, default=None)
