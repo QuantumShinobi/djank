@@ -18,6 +18,8 @@ toml = "==0.10.2"
 whitenoise = "==5.2.0"
 bcrypt = "*"
 Django = "==3.1.6"
+djangorestframework = "*"
+requests = "*"
 
 [dev-packages]
 

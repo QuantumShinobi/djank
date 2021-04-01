@@ -25,6 +25,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: Running Tests
         env: # Or as an environment variable
           SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK }}

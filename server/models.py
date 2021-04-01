@@ -14,3 +14,11 @@ class User(models.Model):
 
     def __str__(self):
         return self.username
+
+
+class Discord_Account(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    discord_username = models.CharField(
+        editable=True, max_length=37, default=None, null=True)
+    is_verified = models.BooleanField(default=False, null=False)
+    discord_id = models.IntegerField(default=None)

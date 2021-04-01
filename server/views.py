@@ -1,5 +1,6 @@
 import bcrypt
 from django.http.response import HttpResponse
+from .discord import *
 from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
@@ -42,6 +43,7 @@ def singed_up(request):
             username = request.POST['username']
             password = request.POST['password']
             name = request.POST['name']
+            discord_username = request.POST['discord_username']
             if User.objects.filter(username=username).exists() == True:
                 return render(request, "main/signup.html", context={'error': "Username has already been taken"})
             else:
@@ -56,6 +58,8 @@ def singed_up(request):
                 response = render(request, 'main/logout.html',
                                   context={"title": "Sign up", "text": "Creating your account"})
                 response.set_cookie("user-identity", str(new_user.unique_id))
+                if discord_username != "":
+                    new_discord_ac = Discord_Account.objects.create()
                 return response
         else:
             return redirect("main:index")

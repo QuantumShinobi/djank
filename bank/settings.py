@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'server.apps.ServerConfig',
     'redirect.apps.RedirectConfig',
+    'api',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
