@@ -22,14 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO_BANK')
-DEBUG = True
 # SECURITY WARNING: don't run with debug turned on in production!
 # print(DEBUG)
-if DEBUG == None:
-    ALLOWED_HOSTS = ['*']
-else:
-    ALLOWED_HOSTS = []
 
+MODE = os.environ.get('MODE_DJANGO_BANK')
 
 # Application definition
 
@@ -124,13 +120,15 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-mode = os.getenv("MODE")
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR/"static"
 ]
-if mode == "dev":
+if MODE == "dev":
+    ALLOWED_HOSTS = []
+    DEBUG = True
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
@@ -143,7 +141,13 @@ if mode == "dev":
     SECURE_HSTS_SECONDS = None
     SECURE_HSTS_INCLUDE_SUBDOMAINS = False
     SECURE_FRAME_DENY = False
-elif mode == "prod":
+elif MODE == "prod":
+    import dj_database_url
+    import django_heroku
+    db_from_env = dj_database_url.config(conn_max_age=600)
+    DATABASES['default'].update(db_from_env)
+    ALLOWED_HOSTS = ['*']
+    DEBUG = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_SSL_REDIRECT = True
@@ -156,3 +160,4 @@ elif mode == "prod":
     SECURE_HSTS_SECONDS = None
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_FRAME_DENY = True
+    django_heroku.settings(locals())
