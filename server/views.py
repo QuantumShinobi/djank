@@ -89,8 +89,8 @@ def logged_in(request):
             user = User.objects.get(username=username)
             try:
                 return user.authenticate(password, request)
-            except TypeError:
-                return HttpResponse(type(password))
+            # except TypeError:
+            #     return HttpResponse()
         else:
             return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
     else:
