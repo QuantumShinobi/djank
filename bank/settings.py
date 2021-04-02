@@ -148,18 +148,18 @@ elif MODE == "prod":
     DATABASES['default'].update(db_from_env)
     ALLOWED_HOSTS = ['*']
     DEBUG = False
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
-    CORS_REPLACE_HTTPS_REFERER = True
-    HOST_SCHEME = "https://"
-    SECURE_PROXY_SSL_HEADER = None
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = None
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_FRAME_DENY = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+    # SECURE_SSL_REDIRECT = True
+    # CORS_REPLACE_HTTPS_REFERER = True
+    # HOST_SCHEME = "https://"
+    # SECURE_PROXY_SSL_HEADER = None
+    # SECURE_SSL_REDIRECT = True
+    # SESSION_COOKIE_SECURE = True
+    # CSRF_COOKIE_SECURE = True
+    # SECURE_HSTS_SECONDS = None
+    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    # SECURE_FRAME_DENY = True
     django_heroku.settings(locals())
 elif MODE == "test-prod":
     import dj_database_url
