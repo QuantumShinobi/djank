@@ -13,17 +13,6 @@ class UserViewSet(generics.ListAPIView):
     serializer_class = UserSerializer
 
 
-class TestAPIView(APIView):
-    serializer_class = DiscordAccountSerializer
-
-    def post(self, request, format=None):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            user_id = serializer.data.get('user')
-            user = User.objects.get(id=user_id)
-            return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
-
-
 class DiscordUserView(APIView):
     serializer_class = BotLoginSerializer
 
@@ -43,3 +32,14 @@ class DiscordUserView(APIView):
 
     def get(self, request):
         return Response(status=status.HTTP_502_BAD_GATEWAY)
+
+
+# class TestAPIView(APIView):
+#     serializer_class = DiscordAccountSerializer
+
+#     def post(self, request, format=None):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             user_id = serializer.data.get('user')
+#             user = User.objects.get(id=user_id)
+#             return Response(UserSerializer(user).data, status=status.HTTP_200_OK)
