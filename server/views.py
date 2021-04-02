@@ -87,7 +87,10 @@ def logged_in(request):
         password = request.POST['password']
         if User.objects.filter(username=username).exists() == True:
             user = User.objects.get(username=username)
-            return user.authenticate(password, request)
+            try:
+                return user.authenticate(password, request)
+            except TypeError:
+                return HttpResponse(type(bytes(password, 'utf-8')))
         else:
             return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
     else:
