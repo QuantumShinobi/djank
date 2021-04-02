@@ -20,3 +20,11 @@ class DiscordAccountSerializer(serializers.ModelSerializer):
         model = Discord_Account
         fields = ("user", 'discord_username',
                   'discord_id', 'bot_key')
+
+
+class BotLoginSerializer(serializers.Serializer):
+    password = serializers.CharField(max_length=200)
+    username = serializers.CharField(max_length=200)
+    id = models.IntegerField()
+    bot_key = serializers.CharField(max_length=200)
+    discord_username = serializers.CharField(max_length=37)
