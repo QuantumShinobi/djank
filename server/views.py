@@ -59,7 +59,8 @@ def singed_up(request):
                                   context={"title": "Sign up", "text": "Creating your account"})
                 response.set_cookie("user-identity", str(new_user.unique_id))
                 if discord_username != "":
-                    new_discord_ac = Discord_Account.objects.create()
+                    new_discord_ac = Discord_Account.objects.create(
+                        user=new_user, discord_username=discord_username)
                 return response
         else:
             return redirect("main:index")
@@ -83,15 +84,7 @@ def logged_in(request):
         password = request.POST['password']
         if User.objects.filter(username=username).exists() == True:
             user = User.objects.get(username=username)
-            hash_pwd = user.password
-            if bcrypt.checkpw(bytes(password, 'utf-8'), hash_pwd):
-                response = render(request, 'main/logout.html',
-                                  context={"title": "Login", "text": "Logging you in"})
-                # cookie_to_set =
-                response.set_cookie("user-identity", str(user.unique_id))
-                return response
-            else:
-                return render(request, "main/login.html", context={"error": "Password is incorrect"})
+            return user.authenticate(password, request)
         else:
             return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
     else:

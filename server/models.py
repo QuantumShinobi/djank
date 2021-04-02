@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
-# Create your models here.
+import bcrypt
+from django.shortcuts import render
 
 
 class User(models.Model):
@@ -15,11 +16,23 @@ class User(models.Model):
     def __str__(self):
         return self.username
 
+    def authenticate(self, pwd, request, bot=False):
+        if bot == False:
+            if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password):
+                response = render(request, 'main/logout.html',
+                                  context={"title": "Login",
+                                           "text": "Logging you in"})
+                response.set_cookie("user-identity", str(self.unique_id))
+                return response
+            else:
+                return render(request, "main/login.html", context={"error": "Password is incorrect"})
+        elif bot == True:
+            return bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password)
+
 
 class Discord_Account(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     discord_username = models.CharField(
-        editable=True, max_length=37, default=None, null=True)
-    is_verified = models.BooleanField(default=False, null=False)
-    discord_id = models.IntegerField(default=None)
-    bot_key = models.CharField(max_length=200, default=None)
+        editable=True, max_length=37, default=None, null=False)
+    is_verified = models.BooleanField(default=False, null=False, editable=True)
+    discord_id = models.IntegerField(default=None, null=True)
