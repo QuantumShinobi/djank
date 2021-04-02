@@ -127,7 +127,7 @@ STATICFILES_DIRS = [
     BASE_DIR/"static"
 ]
 if MODE == "dev":
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = ['https://django-bank.herokuapp.com']
     DEBUG = True
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_SECURE = False
