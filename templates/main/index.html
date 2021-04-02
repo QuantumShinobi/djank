@@ -21,8 +21,8 @@ Perform Transactions
 <br><br>
 <a class="btn btn-danger" href="{% url 'main:logout'%}">Logout</a>
 </div>
-
-
+<br><br>
+<button onclick="WarningPopup()" class="btn-danger btn">Delete your account</button>
 {% comment %} Transactions form {% endcomment %}
 
 <div style="display:none;" id="transactions">
@@ -82,4 +82,21 @@ Go back
 Go back
 </button>
 </div>
+
+{% comment %} DeleteAccount Popup {% endcomment %}
+<div class="modal" id="popUp">
+  <span class="modal-content"  id="myPopup">
+  <h1 class="text"><u>Warning</u> ⚠</h1>
+  <h2 class="text">Are you sure that you want to delete this account</h2>
+  <h4 class="text"> <b>THIS ACTION IS IRREVERSIBLE</b> </h4>
+  <br>
+  <a href="{% url 'main:delete_account' %}" class="btn btn-primary shadow-lg">Yes, Delete my account</a>
+  <br>
+  <button onclick="cancel()" class="btn btn-success">No, Go Back</button>
+  
+  
+  </span> 
+
+</div>
+
 {% endblock body %}
