@@ -90,7 +90,7 @@ def logged_in(request):
             try:
                 return user.authenticate(password, request)
             except TypeError:
-                return HttpResponse(type(bytes(password, 'utf-8')))
+                return HttpResponse((bytes(password, 'utf-8')))
         else:
             return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
     else:
