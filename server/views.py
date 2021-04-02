@@ -4,6 +4,7 @@ from .discord import *
 from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
+import re
 # Create your views here.
 
 
@@ -58,9 +59,11 @@ def singed_up(request):
                 response = render(request, 'main/logout.html',
                                   context={"title": "Sign up", "text": "Creating your account"})
                 response.set_cookie("user-identity", str(new_user.unique_id))
+                # and re.search(r"\w", discord_username) and format_is_correct(username):
                 if discord_username != "":
                     new_discord_ac = Discord_Account.objects.create(
                         user=new_user, discord_username=discord_username)
+                    # response.set_cookie("discord_account", "yes")
                 return response
         else:
             return redirect("main:index")
@@ -137,3 +140,24 @@ def withdraw(request):
         return redirect("main:index")
     else:
         return render(request, "error.html", context={"error": "Access Denied"})
+
+
+def del_account(request):
+    try:
+        request.COOKIES['user-identity']
+    except (KeyError):
+        return redirect("main:login")
+    else:
+        id = request.COOKIES['user-identity']
+        try:
+            user = User.objects.get(unique_id=id)
+        except User.DoesNotExist:
+            res = render(request, "main/logout.html",
+                         context={"text": "Loading"})
+            res.delete_cookie("user-identity")
+            return res
+        else:
+            user.delete()
+            res = render(request, "main/logout.html",
+                         context={"text": "Deleting your account"})
+            return res
