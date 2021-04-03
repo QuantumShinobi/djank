@@ -21,7 +21,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO_BANK')
 # print(DEBUG)
 
 MODE = os.environ.get('MODE_DJANGO_BANK')
-print(MODE)
 # Application definition
 
 INSTALLED_APPS = [
