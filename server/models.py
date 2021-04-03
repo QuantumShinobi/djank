@@ -18,14 +18,25 @@ class User(models.Model):
 
     def authenticate(self, pwd, request, bot=False):
         if bot == False:
-            if bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(str(self.password), 'utf-8')):
-                response = render(request, 'main/logout.html',
-                                  context={"title": "Login",
-                                           "text": "Logging you in"})
-                response.set_cookie("user-identity", str(self.unique_id))
-                return response
+            if type(self.password) == memoryview:
+                if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password.tobytes()):
+
+                    response = render(request, 'main/logout.html',
+                                      context={"title": "Login",
+                                               "text": "Logging you in"})
+                    response.set_cookie("user-identity", str(self.unique_id))
+                    return response
+                else:
+                    return render(request, "main/login.html", context={"error": "Password is incorrect"})
             else:
-                return render(request, "main/login.html", context={"error": "Password is incorrect"})
+                if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password):
+                    response = render(request, 'main/logout.html',
+                                      context={"title": "Login",
+                                               "text": "Logging you in"})
+                    response.set_cookie("user-identity", str(self.unique_id))
+                    return response
+                else:
+                    return render(request, "main/login.html", context={"error": "Password is incorrect"})
         elif bot == True:
             return bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8'))
 

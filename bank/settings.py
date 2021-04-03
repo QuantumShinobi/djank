@@ -14,11 +14,6 @@ import os
 # from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# load_dotenv()
-# env_path = Path('.')/'.env'
-# load_dotenv(dotenv_path=env_path)
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO_BANK')
@@ -26,7 +21,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY_DJANGO_BANK')
 # print(DEBUG)
 
 MODE = os.environ.get('MODE_DJANGO_BANK')
-
+print(MODE)
 # Application definition
 
 INSTALLED_APPS = [
@@ -83,7 +78,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -169,18 +163,6 @@ elif MODE == "test-prod":
     DATABASES['default'].update(db_from_env)
     ALLOWED_HOSTS = ['*']
     DEBUG = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_SSL_REDIRECT = True
-    CORS_REPLACE_HTTPS_REFERER = True
-    HOST_SCHEME = "https://"
-    SECURE_PROXY_SSL_HEADER = None
-    SECURE_SSL_REDIRECT = True
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = None
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_FRAME_DENY = True
     django_heroku.settings(locals())
 LOGGING = {
     'version': 1,
