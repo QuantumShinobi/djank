@@ -1,2 +1,5 @@
-# django-bank
-Django Bank
+# Djank
+
+A (fake) Bank
+
+[Visit us!](https://iameinstein.github.io/Djank)
