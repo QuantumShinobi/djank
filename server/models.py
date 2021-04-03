@@ -27,7 +27,7 @@ class User(models.Model):
             else:
                 return render(request, "main/login.html", context={"error": "Password is incorrect"})
         elif bot == True:
-            return bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password)
+            return bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8'))
 
 
 class Discord_Account(models.Model):
