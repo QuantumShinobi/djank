@@ -18,7 +18,7 @@ class User(models.Model):
 
     def authenticate(self, pwd, request, bot=False):
         if bot == False:
-            if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password):
+            if bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8')):
                 response = render(request, 'main/logout.html',
                                   context={"title": "Login",
                                            "text": "Logging you in"})
