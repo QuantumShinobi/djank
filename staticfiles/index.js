@@ -9,3 +9,18 @@ window.onclick = function (event) {
     document.getElementById("popUp").style.display = "none";
   }
 };
+
+
+// function getDiscordCookie() {
+//   var cookies = document.cookie
+//     .split(";")
+//     .map((cookie) => cookie.split("="))
+//     .reduce(
+//       (accumulator, [key, value]) => ({
+//         ...accumulator,
+//         [key.trim]: decodeURIComponent(value),
+//       }),
+//       {}
+//     );
+//   console.log(cookies["user-identity"]);
+// }

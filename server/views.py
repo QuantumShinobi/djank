@@ -35,7 +35,7 @@ def login(request):
         return redirect("main:index")
 
 
-def singed_up(request):
+def signed_up(request):
 
     if request.method == "POST":
         try:
@@ -61,6 +61,15 @@ def singed_up(request):
                 response.set_cookie("user-identity", str(new_user.unique_id))
                 # and re.search(r"\w", discord_username) and format_is_correct(username):
                 if discord_username != "":
+                    check = format_is_correct(discord_username)
+                    if check == None or check == "Blank Username":
+                        # note = "Your discord account was not connected either because the field was blank or because the format was not correct"
+                        response.set_cookie(
+                            "discord_account", "None")
+                    else:
+                        response.set_cookie(
+                            "discord_account", "True")
+
                     new_discord_ac = Discord_Account.objects.create(
                         user=new_user, discord_username=discord_username)
                     # response.set_cookie("discord_account", "yes")
