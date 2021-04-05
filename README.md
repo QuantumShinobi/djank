@@ -1,2 +1,3 @@
-# django-bank
+# Djank, the bank
+
 Django Bank
