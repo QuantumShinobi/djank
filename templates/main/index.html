@@ -3,8 +3,10 @@
 {% block body %}
 {% load static %}
 <script src="{% static 'bank.js' %}"></script>
-
-
+<h1 style="display:none;"class="alert alert-danger"></h1>
+{% comment %} <script>
+document.cookie.s
+</script> {% endcomment %}
 {% comment %}  Main output {% endcomment %}
 <div id="main" style="display:block;">
 {% if user %}
