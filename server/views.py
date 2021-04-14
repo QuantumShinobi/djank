@@ -4,6 +4,7 @@ from .discord import *
 from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
+import re
 # Create your views here.
 
 

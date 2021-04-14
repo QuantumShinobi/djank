@@ -25,10 +25,27 @@ class User(models.Model):
                 response.set_cookie(
                     "user-identity", str(self.unique_id), max_age=31104000)
                 return response
+            if type(self.password) == memoryview:
+                if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password.tobytes()):
+
+                    response = render(request, 'main/logout.html',
+                                      context={"title": "Login",
+                                               "text": "Logging you in"})
+                    response.set_cookie("user-identity", str(self.unique_id))
+                    return response
+                else:
+                    return render(request, "main/login.html", context={"error": "Password is incorrect"})
             else:
-                return render(request, "main/login.html", context={"error": "Password is incorrect"})
+                if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password):
+                    response = render(request, 'main/logout.html',
+                                      context={"title": "Login",
+                                               "text": "Logging you in"})
+                    response.set_cookie("user-identity", str(self.unique_id))
+                    return response
+                else:
+                    return render(request, "main/login.html", context={"error": "Password is incorrect"})
         elif bot == True:
-            return bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password)
+            return bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8'))
 
 
 class Discord_Account(models.Model):
