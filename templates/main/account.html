@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Your account{% endblock title %}
+{% block body %}
+{% load static %}
+    
+<script src="{% static 'account.js' %}"></script>
+<div class=" alert alert-primary" style="display:none;" id="pwd_change_alert">Your password has been changed </div>
+<div id="main" class="shadow-none p-3 mb-5 bg-light rounded">
+<h1 class="text">Your account info</h1>
+<ul>
+<h3 class="text text-primary"> Name  - {{user.name}}</h3>
+<h3 class="text text-primary"> Balance  - {{user.bank_balance}}</h3>
+</ul>
+<br>
+<a class="btn btn-primary" href="/site/index">
+Go back
+</a>
+<button class="btn btn-dark" onclick="show_pwd_form()">Change Password</button>
+</div>
+
+{% comment %} CHANGE PASSWORD FORM {% endcomment %}
+<div style="display:none;" id="pwd_form">
+<form action="{% url 'main:change_pwd' %}" method="post">
+<div class="row g-1 align-items-center">
+<div class="col-auto">
+<b><h1 class="has-text-weight-bold  has-text-centered is-size-5" for="password">New password</h1></b>
+<br>
+<input class="form-control" type="text" placeholder="New Password" name="password" id="password" required>
+<br>
+<span class="btn btn-danger" onclick="WarningPopup()" value="Change password">Change password </span>
+<span class="btn btn-success" onclick="back()">Go back</span>
+{% comment %} FINAL CHECK POPUP DIV {% endcomment %}
+<div class="modal" id="popUp">
+{% csrf_token %}
+  <span class="modal-content"  id="myPopup">
+  <h1 class="text"><u>Warning</u> ⚠</h1>
+  <h2 class="text">Are you sure that you want to change your passoword ?</h2>
+  <h4 class="text"> <b>THIS ACTION IS IRREVERSIBLE</b> </h4>
+  <br>
+  <input type="submit" value="Yes, Change it" name="submit" class="btn btn-primary shadow-lg">
+  <br>
+  <button onclick="cancel()" class="btn btn-success">No, Go Back</button>
+  </form>
+  
+  </span> 
+
+</div>
+
+
+
+
+</div>
+</div>
+</form>
+
+<br>
+</div>
+
+
+{% endblock body %}
+
+
