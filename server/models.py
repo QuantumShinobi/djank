@@ -6,7 +6,7 @@ from django.shortcuts import render
 
 class User(models.Model):
     username = models.CharField(max_length=25, unique=True)
-    password = models.BinaryField()
+    password = models.BinaryField(editable=True)
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(null=True)
     bank_balance = models.IntegerField(default=100)
@@ -18,6 +18,13 @@ class User(models.Model):
 
     def authenticate(self, pwd, request, bot=False):
         if bot == False:
+            if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password):
+                response = render(request, 'main/logout.html',
+                                  context={"title": "Login",
+                                           "text": "Logging you in"})
+                response.set_cookie(
+                    "user-identity", str(self.unique_id), max_age=31104000)
+                return response
             if type(self.password) == memoryview:
                 if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password.tobytes()):
 

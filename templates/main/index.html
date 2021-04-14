@@ -4,18 +4,23 @@
 {% load static %}
 <script src="{% static 'bank.js' %}"></script>
 <h1 style="display:none;"class="alert alert-danger"></h1>
-{% comment %} <script>
-document.cookie.s
-</script> {% endcomment %}
-{% comment %}  Main output {% endcomment %}
 <div id="main" style="display:block;">
-{% if user %}
-<h1 class="has-text-weight-medium">Hi {{user.name}}</h1>
-<h2>Your bank balance is <span class="text-success">${{user.bank_balance}}</h2></span>
-{% else %}
-<h1>Hi</h1>
-{% endif %}
 
+<div style="display: flex;justify-content: space-between;"class="flex">
+<div class="flex-one">
+<h1 class="has-text-weight-medium">Hi {{user.name}}</h1>
+</div>
+<div style="display:flex; flex-direction:column;" class="flex-2">
+<a href="{% url 'main:account' %}">
+<i style="text-decoration:none;" class="fa-4x fas fa-cogs" id="icon"></i>
+<br>
+&nbsp;<span class="text-xl">Settings</span>
+</a>
+</div>
+</div>
+
+
+<h2>Your bank balance is <span class="text-success">${{user.bank_balance}}</h2></span>
 <br><br>
 <button class="btn btn-primary" onclick="show()">
 Perform Transactions
@@ -25,11 +30,7 @@ Perform Transactions
 <br><br>
 <button onclick="WarningPopup()" class="btn-danger btn">Delete your account</button>
 </div>
-
-
-
 {% comment %} Transactions form {% endcomment %}
-
 <div style="display:none;" id="transactions">
 <button class="btn btn-primary" onclick="add()">
 Add money
@@ -58,7 +59,6 @@ Go back
   </div>
 
 <br>
-
 </form>
 <button class="btn btn-primary" onclick="back()">
 Go back
@@ -90,18 +90,21 @@ Go back
 
 {% comment %} DeleteAccount Popup {% endcomment %}
 <div class="modal" id="popUp">
+<form action="{% url 'main:delete_account' %}" method="post">
+{% csrf_token %}
   <span class="modal-content"  id="myPopup">
   <h1 class="text"><u>Warning</u> ⚠</h1>
   <h2 class="text">Are you sure that you want to delete this account</h2>
   <h4 class="text"> <b>THIS ACTION IS IRREVERSIBLE</b> </h4>
   <br>
-  <a href="{% url 'main:delete_account' %}" class="btn btn-primary shadow-lg">Yes, Delete my account</a>
+  <input type="submit" value="Yes, Delete my account" name="submit" class="btn btn-primary shadow-lg">
   <br>
   <button onclick="cancel()" class="btn btn-success">No, Go Back</button>
-  
+  </form>
   
   </span> 
 
 </div>
+
 
 {% endblock body %}

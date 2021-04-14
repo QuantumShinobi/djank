@@ -302,3 +302,18 @@
 .info {
   color: #0dcaf0;
 }
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-around;
+}
+.flex-one {
+  width: 50%;
+}

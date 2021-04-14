@@ -152,6 +152,31 @@ def withdraw(request):
 
 
 def del_account(request):
+    if request.method == "POST":
+        try:
+            request.COOKIES['user-identity']
+        except (KeyError):
+            return redirect("main:login")
+        else:
+            id = request.COOKIES['user-identity']
+            try:
+                user = User.objects.get(unique_id=id)
+            except User.DoesNotExist:
+                res = render(request, "main/logout.html",
+                             context={"text": "Loading"})
+                res.delete_cookie("user-identity")
+                return res
+            else:
+                user.delete()
+                res = render(request, "main/logout.html",
+                             context={"text": "Deleting your account"})
+                return res
+    else:
+        return HttpResponse("ACCESS DENIED")
+
+
+def account(request):
+
     try:
         request.COOKIES['user-identity']
     except (KeyError):
@@ -166,7 +191,32 @@ def del_account(request):
             res.delete_cookie("user-identity")
             return res
         else:
-            user.delete()
+            return render(request, "main/account.html", context={"user": user})
+
+
+def change_pwd(request):
+    try:
+        request.COOKIES['user-identity']
+    except (KeyError):
+        return redirect("main:login")
+    else:
+        id = request.COOKIES['user-identity']
+        try:
+            user = User.objects.get(unique_id=id)
+        except User.DoesNotExist:
             res = render(request, "main/logout.html",
-                         context={"text": "Deleting your account"})
+                         context={"text": "Loading"})
+            res.delete_cookie("user-identity")
             return res
+        else:
+            if request.method == "GET":
+                return HttpResponse("Access Denied")
+            elif request.method == "POST":
+                pwd = request.POST['password']
+                hash_pwd = bcrypt.hashpw(
+                    bytes(pwd, 'utf-8'), bcrypt.gensalt())
+                user.password = hash_pwd
+                user.save()
+
+                host = request.META['HTTP_HOST']
+                return redirect(f"http://{host}/site/yourAccount?pwd_change=true")
