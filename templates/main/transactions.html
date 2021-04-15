@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Transaction History{% endblock title %}
+{% block body %}
+<h1>Transaction History</h1>
+<ul>
+{% if transactions %}
+    {% for transaction in transactions %}
+   <li> {{transaction.amount}} - {{transaction.type}} at {{transaction.timestamp}}
+    {% endfor %}
+</ul>
+<form action="{% url 'main:delete_transactions' %}" method="post">
+<span class="btn btn-danger" onclick="WarningPopup()" value="">Delete transaction history</span>
+<div class="modal" id="popUp">
+{% csrf_token %}
+  <span class="modal-content"  id="myPopup">
+  <h1 class="text"><u>Warning</u> ⚠</h1>
+  <h2 class="text">Are you sure that you want to change your delete your transaction history ?</h2>
+  <h4 class="text"> <b>THIS ACTION IS IRREVERSIBLE</b> </h4>
+  <br>
+  <input type="submit" value="Yes, Change it" name="submit" class="btn btn-primary shadow-lg">
+  <br>
+  <button onclick="cancel()" class="btn btn-success">No, Go Back</button> 
+
+</form> 
+
+
+{% endif %}
+
+
+
+{% endblock body %} 

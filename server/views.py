@@ -4,26 +4,16 @@ from .discord import *
 from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
-import re
+import uuid
 # Create your views here.
 
 
 def index(request):
-    try:
-        request.COOKIES['user-identity']
-    except (KeyError):
-        return redirect("main:login")
+    if isinstance(User.get_user(request=request), User):
+        user = User.get_user(request=request)
+        return render(request, 'main/index.html', context={"user": user})
     else:
-        id = request.COOKIES['user-identity']
-        try:
-            user = User.objects.get(unique_id=id)
-        except User.DoesNotExist:
-            res = render(request, "main/logout.html",
-                         context={"text": "Loading"})
-            res.delete_cookie("user-identity")
-            return res
-
-    return render(request, 'main/index.html', context={"user": user})
+        return User.get_user(request=request)
 
 
 def login(request):
@@ -104,16 +94,7 @@ def logged_in(request):
 
 
 def logout(request):
-    try:
-        request.COOKIES['user-identity']
-    except KeyError:
-        return redirect("main:index")
-
-    else:
-        response = render(request, 'main/logout.html',
-                          context={"title": "Logout", "text": "Logging you out"})
-        response.delete_cookie("user-identity")
-        return response
+    return User.logout(request=request)
 
 
 def add(request):
@@ -124,6 +105,9 @@ def add(request):
         try:
             user.bank_balance += int(money_to_add)
             user.save()
+            new_transaction_created = Transaction(
+                user=user, amount=money_to_add, type="add")
+            user.transaction(new_transaction_created)
         except ValueError:
             return render(request, "error.html", context={"error": "How can u add a non-number field to your bank balance ?"})
         return redirect("main:index")
@@ -146,6 +130,9 @@ def withdraw(request):
         else:
             user.bank_balance -= int(money_to_withdraw)
             user.save()
+            new_transaction_created = Transaction(
+                user=user, amount=money_to_withdraw, type="withdraw")
+            user.transaction(new_transaction_created)
         return redirect("main:index")
     else:
         return render(request, "error.html", context={"error": "Access Denied"})
@@ -153,70 +140,62 @@ def withdraw(request):
 
 def del_account(request):
     if request.method == "POST":
-        try:
-            request.COOKIES['user-identity']
-        except (KeyError):
-            return redirect("main:login")
+        if isinstance(User.get_user(request=request), User):
+            user = User.get_user(request=request)
+            user.delete()
+            res = render(request, "main/logout.html",
+                         context={"text": "Loading"})
+            res.delete_cookie("user-identity")
+            return res
         else:
-            id = request.COOKIES['user-identity']
-            try:
-                user = User.objects.get(unique_id=id)
-            except User.DoesNotExist:
-                res = render(request, "main/logout.html",
-                             context={"text": "Loading"})
-                res.delete_cookie("user-identity")
-                return res
-            else:
-                user.delete()
-                res = render(request, "main/logout.html",
-                             context={"text": "Deleting your account"})
-                return res
+            return User.get_user(request=request)
     else:
         return HttpResponse("ACCESS DENIED")
 
 
 def account(request):
-
-    try:
-        request.COOKIES['user-identity']
-    except (KeyError):
-        return redirect("main:login")
+    if isinstance(User.get_user(request=request), User):
+        user = User.get_user(request=request)
+        return render(request, "main/account.html", context={"user": user})
     else:
-        id = request.COOKIES['user-identity']
-        try:
-            user = User.objects.get(unique_id=id)
-        except User.DoesNotExist:
-            res = render(request, "main/logout.html",
-                         context={"text": "Loading"})
-            res.delete_cookie("user-identity")
-            return res
-        else:
-            return render(request, "main/account.html", context={"user": user})
+        return User.get_user(request)
 
 
 def change_pwd(request):
-    try:
-        request.COOKIES['user-identity']
-    except (KeyError):
-        return redirect("main:login")
-    else:
-        id = request.COOKIES['user-identity']
-        try:
-            user = User.objects.get(unique_id=id)
-        except User.DoesNotExist:
-            res = render(request, "main/logout.html",
-                         context={"text": "Loading"})
-            res.delete_cookie("user-identity")
-            return res
-        else:
-            if request.method == "GET":
-                return HttpResponse("Access Denied")
-            elif request.method == "POST":
-                pwd = request.POST['password']
-                hash_pwd = bcrypt.hashpw(
-                    bytes(pwd, 'utf-8'), bcrypt.gensalt())
-                user.password = hash_pwd
-                user.save()
+    if isinstance(User.get_user(request=request), User):
+        user = User.get_user(request=request)
+        if request.method == "GET":
+            return HttpResponse("Access Denied")
+        elif request.method == "POST":
+            pwd = request.POST['password']
+            hash_pwd = bcrypt.hashpw(
+                bytes(pwd, 'utf-8'), bcrypt.gensalt())
+            user.password = hash_pwd
+            user.save()
 
-                host = request.META['HTTP_HOST']
-                return redirect(f"http://{host}/site/yourAccount?pwd_change=true")
+            host = request.META['HTTP_HOST']
+            return redirect(f"http://{host}/site/yourAccount?pwd_change=true")
+    else:
+        return User.get_user(request=request)
+
+
+# Transaction list for user
+def transaction_list(request):
+    if isinstance(User.get_user(request=request), User):
+        user = User.get_user(request=request)
+        transaction_list = user.get_transactions()
+        return render(request, "main/transactions.html", context={"transactions": transaction_list})
+    else:
+        return User.get_user(request=request)
+
+
+def delete_transaction_history(request):
+    if isinstance(User.get_user(request=request), User):
+        if request.method == "POST":
+            user = User.get_user(request=request)
+            user.transaction_list = []
+            user.save()
+            host = request.META['HTTP_HOST']
+            return redirect(f"http://{host}/site/yourAccount?t_list_erase=true")
+        else:
+            return HttpResponse("Access Denied")

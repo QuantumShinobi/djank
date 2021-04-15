@@ -12,6 +12,8 @@ urlpatterns = [
     path('w', withdraw, name="withdraw"),
     path('del', del_account, name="delete_account"),
     path('yourAccount', account, name="account"),
-    path("cp", change_pwd, name="change_pwd")
+    path("cp", change_pwd, name="change_pwd"),
+    path("t_list", transaction_list, name="transaction_list"),
+    path("d_list", delete_transaction_history, name="delete_transactions")
 
 ]
