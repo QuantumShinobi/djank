@@ -5,6 +5,8 @@
     
 <script src="{% static 'account.js' %}"></script>
 <div class=" alert alert-primary" style="display:none;" id="pwd_change_alert">Your password has been changed </div>
+<div class=" alert alert-primary" style="display:none;" id="t_list_erase">Your transaction history was deleted </div>
+
 <div id="main" class="shadow-none p-3 mb-5 bg-light rounded">
 <h1 class="text">Your account info</h1>
 <ul>
@@ -15,6 +17,8 @@
 <a class="btn btn-primary" href="/site/index">
 Go back
 </a>
+<a class="btn btn-primary" href="/site/t_list">
+See transaction history</a>
 <button class="btn btn-dark" onclick="show_pwd_form()">Change Password</button>
 </div>
 
