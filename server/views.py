@@ -144,7 +144,7 @@ def del_account(request):
             user = User.get_user(request=request)
             user.delete()
             res = render(request, "main/logout.html",
-                         context={"text": "Loading"})
+                         context={"text": "Deleting your account"})
             res.delete_cookie("user-identity")
             return res
         else:
