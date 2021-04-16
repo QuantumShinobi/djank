@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/kolkata'
 
 USE_I18N = True
 #
@@ -178,7 +178,6 @@ elif MODE == "test-prod":
     SECURE_HSTS_SECONDS = None
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_FRAME_DENY = True
-
 
     django_heroku.settings(locals())
 LOGGING = {
