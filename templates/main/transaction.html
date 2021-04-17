@@ -6,11 +6,10 @@ Transaction Details
 {% if transaction %}
 <h1>Transaction Details</h1>
 <ul>
-<li><h3 class="text-success">Performed By  - {{user.name}}</h3>
-<li><h3 class="text-success">Time - {{transaction.timestamp}}</h3>
-<li><h3 class="text-success">ID - {{transaction.transaction_id}}</h3>
-<li><h3 class="text-success">Type - {{transaction.type}}</h3>
 <li><h3 class="text-success">Amount - {{transaction.amount}}</h3>
+<li><h3 class="text-success">Type - {{transaction.type}}</h3>
+<li><h3 class="text-success">Performed By  - {{user.username}}</h3>
+<li><h3 class="text-success">Time - {{transaction.timestamp}} (UTC)</h3>
 </ul>
 <a href="{% url 'main:transaction_list' %}" class="btn btn-primary">Go Back</a>
 {% endif %}
