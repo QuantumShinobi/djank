@@ -183,7 +183,10 @@ def change_pwd(request):
 def transaction_list(request):
     if isinstance(User.get_user(request=request), User):
         user = User.get_user(request=request)
-        transaction_list = user.get_transactions()
+        try:
+            transaction_list = user.get_transactions()
+        except TypeError:
+            return render(request, "main/transactions.html", context={"no_t": "You have no transactions"})
         return render(request, "main/transactions.html", context={"transactions": transaction_list, "host": request.META['HTTP_HOST']})
     else:
         return User.get_user(request=request)
