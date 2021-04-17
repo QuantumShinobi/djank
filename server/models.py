@@ -28,7 +28,8 @@ class User(models.Model):
                     response = render(request, 'main/logout.html',
                                       context={"title": "Login",
                                                "text": "Logging you in"})
-                    response.set_cookie("user-identity", str(self.unique_id))
+                    response.set_cookie(
+                        "user-identity", str(self.unique_id), max_age=31556952)
                     return response
                 else:
                     return render(request, "main/login.html", context={"error": "Password is incorrect"})
