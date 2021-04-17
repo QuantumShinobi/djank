@@ -3,6 +3,7 @@ import uuid
 import bcrypt
 from django.shortcuts import render, redirect
 import json
+from bank.settings import DEBUG
 
 
 class User(models.Model):
@@ -13,8 +14,12 @@ class User(models.Model):
     bank_balance = models.IntegerField(default=100)
     unique_id = models.UUIDField(
         unique=True, default=uuid.uuid4, editable=False)
-    transaction_list = models.CharField(
-        max_length=100000000, null=True, default=None)
+    if DEBUG == False:
+        transaction_list = models.CharField(
+            max_length=10485760, null=True, default=None)
+    elif DEBUG == True:
+        transaction_list = models.CharField(
+            max_length=100000000, null=True, default=None)
 
     def __str__(self):
         return self.username
