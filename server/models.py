@@ -3,7 +3,7 @@ import uuid
 import bcrypt
 from django.shortcuts import render, redirect
 import json
-from bank.settings import DEBUG
+from bank.settings import MODE
 
 
 class User(models.Model):
@@ -14,10 +14,10 @@ class User(models.Model):
     bank_balance = models.IntegerField(default=100)
     unique_id = models.UUIDField(
         unique=True, default=uuid.uuid4, editable=False)
-    if DEBUG == False:
+    if MODE == "prod" or MODE == "test-prod":
         transaction_list = models.CharField(
             max_length=10485760, null=True, default=None)
-    elif DEBUG == True:
+    elif MODE == "dev":
         transaction_list = models.CharField(
             max_length=100000000, null=True, default=None)
 
