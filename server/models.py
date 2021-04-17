@@ -22,13 +22,6 @@ class User(models.Model):
 
     def authenticate(self, pwd, request, bot=False):
         if bot == False:
-            if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password):
-                response = render(request, 'main/logout.html',
-                                  context={"title": "Login",
-                                           "text": "Logging you in"})
-                response.set_cookie(
-                    "user-identity", str(self.unique_id), max_age=31104000)
-                return response
             if type(self.password) == memoryview:
                 if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password.tobytes()):
 
