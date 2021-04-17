@@ -14,12 +14,8 @@ class User(models.Model):
     bank_balance = models.IntegerField(default=100)
     unique_id = models.UUIDField(
         unique=True, default=uuid.uuid4, editable=False)
-    if MODE == "prod" or MODE == "test-prod":
-        transaction_list = models.CharField(
-            max_length=10485760, null=True, default=None)
-    elif MODE == "dev":
-        transaction_list = models.CharField(
-            max_length=100000000, null=True, default=None)
+    transaction_list = models.CharField(
+        max_length=10485760, null=True, default=None)
 
     def __str__(self):
         return self.username
