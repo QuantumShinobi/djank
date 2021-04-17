@@ -15,7 +15,7 @@ class User(models.Model):
     unique_id = models.UUIDField(
         unique=True, default=uuid.uuid4, editable=False)
     transaction_list = models.CharField(
-        max_length=10485760, null=True, default=None)
+        max_length=10485700, null=True, default=None)
 
     def __str__(self):
         return self.username
