@@ -1,4 +1,5 @@
 import bcrypt
+from django.core.exceptions import ValidationError
 from django.http.response import HttpResponse
 from .discord import *
 from django.shortcuts import redirect, render
@@ -209,5 +210,5 @@ def transaction(request, transaction_id):
         transaction = Transaction.objects.get(transaction_id=transaction_id)
         user = transaction.user
         return render(request, "main/transaction.html", context={"transaction": transaction, "user": user})
-    except (Transaction.DoesNotExist, KeyError):
+    except (Transaction.DoesNotExist, KeyError, ValidationError):
         return HttpResponse("Invalid ID")
