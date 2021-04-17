@@ -179,7 +179,6 @@ elif MODE == "test-prod":
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_FRAME_DENY = True
 
-
     django_heroku.settings(locals())
 LOGGING = {
     'version': 1,

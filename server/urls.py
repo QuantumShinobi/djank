@@ -14,6 +14,7 @@ urlpatterns = [
     path('yourAccount', account, name="account"),
     path("cp", change_pwd, name="change_pwd"),
     path("t_list", transaction_list, name="transaction_list"),
-    path("d_list", delete_transaction_history, name="delete_transactions")
+    path("d_list", delete_transaction_history, name="delete_transactions"),
+    path("transaction/<str:transaction_id>", transaction, name="transaction")
 
 ]

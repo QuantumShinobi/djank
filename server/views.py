@@ -4,7 +4,7 @@ from .discord import *
 from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
-import uuid
+
 # Create your views here.
 
 
@@ -184,7 +184,7 @@ def transaction_list(request):
     if isinstance(User.get_user(request=request), User):
         user = User.get_user(request=request)
         transaction_list = user.get_transactions()
-        return render(request, "main/transactions.html", context={"transactions": transaction_list})
+        return render(request, "main/transactions.html", context={"transactions": transaction_list, "host": request.META['HTTP_HOST']})
     else:
         return User.get_user(request=request)
 
@@ -199,3 +199,12 @@ def delete_transaction_history(request):
             return redirect(f"http://{host}/site/yourAccount?t_list_erase=true")
         else:
             return HttpResponse("Access Denied")
+
+
+def transaction(request, transaction_id):
+    try:
+        transaction = Transaction.objects.get(transaction_id=transaction_id)
+        user = transaction.user
+        return render(request, "main/transaction.html", context={"transaction": transaction, "user": user})
+    except (Transaction.DoesNotExist, KeyError):
+        return HttpResponse("Invalid ID")

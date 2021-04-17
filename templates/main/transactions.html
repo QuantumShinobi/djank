@@ -5,9 +5,12 @@
 <ul>
 {% if transactions %}
     {% for transaction in transactions %}
-   <li> {{transaction.amount}} - {{transaction.type}} at {{transaction.timestamp}}
+   <li> <a class="text-primary" href="http://{{host}}/site/transaction/{{transaction.transaction_id}}">{{transaction.amount}} - {{transaction.type}} at {{transaction.timestamp}}</a>
+
     {% endfor %}
 </ul>
+  <a href="{% url 'main:index' %}" class="btn btn-primary">Go Back</a>
+  <br><br><br>
 <form action="{% url 'main:delete_transactions' %}" method="post">
 <span class="btn btn-danger" onclick="WarningPopup()" value="">Delete transaction history</span>
 <div class="modal" id="popUp">
@@ -27,5 +30,6 @@
 {% endif %}
 
 
+<a href="{% url 'main:index' %}" class="btn btn-primary">Go Back</a>
 
 {% endblock body %} 
