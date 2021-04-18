@@ -47,16 +47,16 @@ Go back
 {% comment %} Add money form {% endcomment %}
 
 <div style="display:none;" id="add">
-<form action="{% url 'main:add' %}" method="post">
+<form id="add_form" action="{% url 'main:add' %}" method="post">
 {% csrf_token %}
 <div class="row g-1 align-items-center">
-  <div class="col-auto">
+<div class="col-auto">
 <b><label class="has-text-weight-bold  has-text-centered is-size-5" for="add_amount">Amount to add</label></b>
 <input class="form-control" type="text" placeholder="Amount to add" name="add_amount" id="add_amount" required>
 <br>
-<input class="btn btn-primary"type="submit" value="Add money">
-  </div>
-  </div>
+<span id="add_btn"  class="btn btn-primary" value="Add money">Add money</span>
+</div>
+</div>
 
 <br>
 </form>
@@ -69,14 +69,14 @@ Go back
 {% comment %} Withdraw form {% endcomment %}
 
 <div style="display:none;" id="withdraw">
-<form action="{% url 'main:withdraw' %}" method="post">
+<form id="minus_form" action="{% url 'main:withdraw' %}" method="post">
 {% csrf_token %}
 <div class="row g-1 align-items-center">
   <div class="col-auto">
 <b><label class="has-text-weight-bold  has-text-centered is-size-5" for="withdraw_amount">Amount to withdraw</label></b>
 <input class="form-control" type="text" placeholder="Amount to withdraw" name="withdraw_amount" id="withdraw_amount" required>
 <br>
-<input class="btn btn-primary"type="submit" value="withdraw money">
+<span class="btn btn-primary" id="minus_btn" value="withdraw money">Withdraw money</span>
   </div>
   </div>
 
@@ -99,7 +99,7 @@ Go back
   <br>
   <input type="submit" value="Yes, Delete my account" name="submit" class="btn btn-primary shadow-lg">
   <br>
-  <button onclick="cancel()" class="btn btn-success">No, Go Back</button>
+  <span onclick="cancel()" class="btn btn-success">No, Go Back</span>
   </form>
   
   </span> 
