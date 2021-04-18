@@ -3,3 +3,6 @@ title: Djank
 description: Djank is an open-source bank project made using django
 show_downloads: true
 # google_analytics:
+github:
+  zip_url: https://codeload.github.com/IamEinstein/djank/zip/refs/tags/v1.0
+  tar_gz_url: https://codeload.github.com/IamEinstein/djank/tar.gz/refs/tags/v1.0
