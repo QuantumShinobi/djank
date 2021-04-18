@@ -1,5 +1,5 @@
-# Djank
+# Djank, djank bank
 
-A (fake) Bank
+Djank, a bank made using djano
 
 [Visit us!](https://iameinstein.github.io/Djank)
