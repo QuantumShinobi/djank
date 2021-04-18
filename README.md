@@ -1,5 +1,6 @@
-# Djank, djank bank
+# Djank, django bank
 
-Djank, a bank made using djano
+Djank is a bank made using django
+It's an open source project available on github and has been dpeloyed to Heroku
 
-[Visit us!](https://iameinstein.github.io/Djank)
+[Visit us!](https://djank.herokuapp.com)
