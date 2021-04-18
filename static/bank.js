@@ -22,12 +22,21 @@ function withdraw() {
 document.addEventListener("DOMContentLoaded", () => {
   add_btn = document.getElementById("add_btn");
   add_btn.onclick = () => {
-    add_btn.disabled = true;
-    document.getElementById("add_form").submit();
+    if (add_btn.disabled !== true) {
+      add_btn.className = "btn btn-primary disabled";
+      document.getElementById("add_form").submit();
+    }
   };
   minus_btn = document.getElementById("minus_btn");
   minus_btn.onclick = () => {
-    minus_btn.disabled = true;
-    document.getElementById("minus_form").submit();
+    if (minus_btn.disabled !== true) {
+      minus_btn.className = "btn btn-primary disabled";
+      document.getElementById("minus_form").submit();
+    }
   };
+  document.addEventListener("keypress", function (event) {
+    if (event.keyCode == 13) {
+      // alert("hi.");
+    }
+  });
 });
