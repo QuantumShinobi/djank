@@ -10,7 +10,6 @@ window.onclick = function (event) {
   }
 };
 
-
 // function getDiscordCookie() {
 //   var cookies = document.cookie
 //     .split(";")
