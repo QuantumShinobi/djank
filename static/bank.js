@@ -18,3 +18,16 @@ function withdraw() {
   to_hide.style.display = "none";
   document.getElementById("withdraw").style.display = "block";
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  add_btn = document.getElementById("add_btn");
+  add_btn.onclick = () => {
+    add_btn.disabled = true;
+    document.getElementById("add_form").submit();
+  };
+  minus_btn = document.getElementById("minus_btn");
+  minus_btn.onclick = () => {
+    minus_btn.disabled = true;
+    document.getElementById("minus_form").submit();
+  };
+});
