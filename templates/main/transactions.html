@@ -22,19 +22,16 @@
   <br>
   <input type="submit" value="Yes, Change it" name="submit" class="btn btn-primary shadow-lg">
   <br>
-  <button onclick="cancel()" class="btn btn-success">No, Go Back</button> 
+  <span onclick="cancel()" class="btn btn-success">No, Go Back</span> 
 
 </form> 
 
 {% elif no_t %}
 <div class="alert alert-danger">{{no_t}}</div>
-
-{% elif no_t %}
-<div class="alert alert-danger">{{no_t}}</div>
+<a href="{% url 'main:index' %}" class="btn btn-primary">Go Back</a>
 
 {% endif %}
 
 
-<a href="{% url 'main:index' %}" class="btn btn-primary">Go Back</a>
 
 {% endblock body %} 
