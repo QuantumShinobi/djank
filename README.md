@@ -23,7 +23,7 @@ So....
 
 Incase you come across a bug (we hope you don't, but still 😅) please report it in our [discord server](https://discord.gg/93zymEfq) in [this channel](https://discord.com/channels/765116597999370260/834320103155302420/834320174470922240)
 ### Site status
-At times, the site is down due to developmental purpose. You can check the status of the site in our [discord server](https://discord.gg/93zymEfq) in [this channel](https://discord.com/channels/765116597999370260/827928668205482025/827929073589157929)
+At times, the site is down due to developmental purposes. You can check the status of the site in our [discord server](https://discord.gg/93zymEfq) in [this channel](https://discord.com/channels/765116597999370260/827928668205482025/827929073589157929)
 
 ## Discord bot 
 As for the bot, it's in the process of being made, we're brining new features to it regularly. You can know more about the bot [here](https://fun-bot-discord.github.io/fun-bot-website/) and [invite it in your server](https://discord.com/oauth2/authorize?client_id=819212547449290794&scope=bot&permissions=2147483647). The prefix for the bot is `f!`
