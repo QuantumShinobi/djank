@@ -7,7 +7,7 @@ It's an open source project available on github and has been deployed to Heroku.
 </div>
 
 ## What is djank all about ?
-Djank is just an open source project made by a group of students in order to learn python. It's aim is to integrate a website with a discord bot and a mobile app made using react-native. :octocat:
+Djank is just an open source project made by a group of students in order to learn python. It's aim is to integrate a website with a discord bot and a mobile app made using react-native.
 
 ## How to use djank
 Well, it's simple, just head on to the [website](https://djank.herokuapp.com) and sign up.
