@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>10 Link redirect</h1>
+<form action="cs" method="post">
+{% csrf_token %}
+{% for i in '0123456789'|make_list %}
+<div class="row g-1 align-items-center">
+<div class="col-auto">
+<label class="has-text-weight-medium  has-text-centered is-size-5" for="link{{forloop.counter}}">Link {{forloop.counter}}</label>
+<input type="text" placeholder="link{{forloop.counter}}" name="link{{forloop.counter}}" id="link{{forloop.counter}}">
+</div>
+</div>
+</div>
+<br>
+
+{% endfor %}
+
+<input type="submit" value="Make link">
+</form>
+{% endblock body %}

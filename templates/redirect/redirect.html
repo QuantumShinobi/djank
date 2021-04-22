@@ -1,0 +1,42 @@
+<script>
+
+const params = new URLSearchParams(window.location.search);
+
+document.addEventListener("DOMContentLoaded", () => {
+  
+      var link1 =document.getElementById("link1").innerHTML
+      window.open(link1, '_blank');
+  var link2 =document.getElementById("link2").innerHTML
+      window.open(link2, '_blank');
+  var link3 =document.getElementById("link3").innerHTML
+      window.open(link3, '_blank');
+      var link4 =document.getElementById("link4").innerHTML
+      window.open(link4, '_blank');
+      var link5 =document.getElementById("link5").innerHTML
+      window.open(link5, '_blank');
+      var link6 =document.getElementById("link6").innerHTML
+      window.open(link6, '_blank');
+      var link7 =document.getElementById("link7").innerHTML
+      window.open(link7, '_blank');
+var link8 =document.getElementById("link8").innerHTML
+      window.open(link8, '_blank');
+      var link9 =document.getElementById("link9").innerHTML
+      window.open(link9, '_blank');
+      var link10 =document.getElementById("link10").innerHTML
+      window.open(link10, '_blank');
+
+
+function clear_q_string(){
+    var uri = window.location.toString();
+    if (uri.indexOf("?") > 0) {
+      var clean_uri = uri.substring(0, uri.indexOf("?"));
+      window.history.replaceState({}, document.title, clean_uri);
+    }
+}
+</script>
+<h1>Donwloading files</h1>
+<div style="display:none;">
+{% for link in links %}
+<p id="link{{forloop.counter}}">{{link}}</p>
+{% endfor %}
+</div>
