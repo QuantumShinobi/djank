@@ -41,8 +41,8 @@ def redirect_pg(request, id):
         link10 = curent_redirect.link10
         link_list = [link1, link2, link3, link4, link5,
                      link6, link7, link8, link9, link10]
-        # return render(request, "redirect/redirect.html", context={"links": link_list})
-        return redirect(link1)
+        return render(request, "redirect/redirect.html", context={"links": link_list})
+        # return redirect(link1)
 
 
 def create_link(request):
