@@ -1,34 +1,35 @@
 import bcrypt
 from django.core.exceptions import ValidationError
-from django.http.response import HttpResponse
+from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
 from .discord import *
 from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
-
+from django.views import View
 # Create your views here.
 
 
-def index(request):
-    if isinstance(User.get_user(request=request), User):
-        user = User.get_user(request=request)
-        return render(request, 'main/index.html', context={"user": user})
-    else:
-        return User.get_user(request=request)
+class IndexView(View):
+    def get(self, request):
+        if isinstance(User.get_user(request=request), User):
+            user = User.get_user(request=request)
+            return render(request, 'main/index.html', context={"user": user})
+        else:
+            return User.get_user(request=request)
 
 
-def login(request):
-    try:
-        request.COOKIES['user-identity']
-    except KeyError:
-        return render(request, 'main/login.html')
-    else:
-        return redirect("main:index")
+class LoginView(View):
+    def get(self, request):
+        try:
+            request.COOKIES['user-identity']
+        except KeyError:
+            return render(request, 'main/login.html')
+        else:
+            return redirect("main:index")
 
 
-def signed_up(request):
-
-    if request.method == "POST":
+class SignedUpView(View):
+    def post(self, request):
         try:
             request.COOKIES['user-identity']
         except KeyError:
@@ -68,8 +69,8 @@ def signed_up(request):
         else:
             return redirect("main:index")
 
-    else:
-        return HttpResponse("Access Denied")
+    def get(self, request):
+        raise Http404
 
 
 def signup(request):
@@ -81,8 +82,8 @@ def signup(request):
         return redirect("main:index")
 
 
-def logged_in(request):
-    if request.method == "POST":
+class LoggedInView(View):
+    def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
         if User.objects.filter(username=username).exists() == True:
@@ -90,8 +91,9 @@ def logged_in(request):
             return user.authenticate(password, request)
         else:
             return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
-    else:
-        return HttpResponse("Acces Denied")
+
+    def get(self, request):
+        raise Http404()
 
 
 def logout(request):

@@ -2,10 +2,10 @@ from django.urls import path
 from .views import *
 app_name = "main"
 urlpatterns = [
-    path('index', index, name="index"),
-    path('login', login, name="login"),
-    path('signed_up', signed_up, name="signed_up"),
-    path('logged_in', logged_in, name="logged_in"),
+    path('index', IndexView.as_view(), name="index"),
+    path('login', LoginView.as_view(), name="login"),
+    path('signed_up',  SignedUpView.as_view(), name="signed_up"),
+    path('logged_in', LoggedInView.as_view(), name="logged_in"),
     path('signup', signup, name="signup"),
     path('logout', logout, name="logout"),
     path('a', add, name="add"),
