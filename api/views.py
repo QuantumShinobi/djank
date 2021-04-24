@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
+from rest_framework.serializers import Serializer
 from server.models import *
 from .serializers import *
 from rest_framework.views import APIView
@@ -46,8 +47,25 @@ class BotLoginAPIView(APIView):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED, data={"error": "GET request is not allowed"})
 
 
-class AmountAPIView(APIView):
-    serializer_class = 
+# class AmountAPIView(APIView):
+#     serializer_class = VerifiedSerializer
+#     def post(self, request, format=None):
+#         serializer = self.serializer_class(data=request.data)
+#         if serializer.is_valid():
+#             bot_key = serializer.data.get("bot_key")
+#             if bot_key == SECRET_KEY:
+#                 verified = serializer.data.get("verified")
+#                 if verified==True:
+#                     discord_user = serializer.data.get("discord_user")
+#                     id = serializer.data.get("id")
+#                     discord_account = Discord_Account.objects.get(discord_id=id)
+#                     if discord_user.is_verified == True:
+
+#                     else:
+#                         return Response(data={"error":"Account is not verified"})
+#             else:
+
+#                 return Response(status=status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED, data={"error":"Source is not verified"})
 
 
 #
