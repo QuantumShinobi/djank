@@ -12,13 +12,13 @@ class UserSerializer(serializers.ModelSerializer):
 class BotLoginSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=200)
     username = serializers.CharField(max_length=200)
-    id = models.IntegerField()
+    id = serializers.IntegerField()
     bot_key = serializers.CharField(max_length=200)
     discord_username = serializers.CharField(max_length=40)
 
     # # TODO: Make Other Bot APIs
-class VerifiedSerializer(serializers.Serializer):
-    discord_username = serializers.CharField(max_length=40)
-    id = models.IntegerField()
-    bot_key = serializers.CharField(max_length=400)
-    verified  = serializers.BooleanField()
+# class VerifiedSerializer(serializers.Serializer):
+#     discord_username = serializers.CharField(max_length=40)
+#     id = models.IntegerField()
+#     bot_key = serializers.CharField(max_length=400)
+#     verified  = serializers.BooleanField()
