@@ -46,7 +46,8 @@ class BotLoginAPIView(APIView):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED, data={"error": "GET request is not allowed"})
 
 
-#
+class AmountAPIView(APIView):
+    serializer_class = 
 
 
 #
