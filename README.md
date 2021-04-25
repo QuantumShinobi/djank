@@ -1,6 +1,9 @@
 # Djank, django bank
 
 Djank is a bank made using django.
+
+![status](https://github.com/iameinstein/djank/actions/workflows/django.yml/badge.svg)
+
 <div style="display:flex;">
 It's an open source project available on github and has been deployed to Heroku.
   
@@ -28,7 +31,7 @@ At times, the site is down due to developmental purposes. You can check the stat
 ## Discord bot 
 As for the bot, it's in the process of being made, we're brining new features to it regularly. You can know more about the bot [here](https://fun-bot-discord.github.io/fun-bot-website/) and [invite it in your server](https://discord.com/oauth2/authorize?client_id=819212547449290794&scope=bot&permissions=2147483647). The prefix for the bot is `f!`
 
-**NOTE : CURRENTLY THE BOT's SITE IS UNDER DEVELOPMENT**
+**NOTE : CURRENTLY THE BOT'S SITE IS UNDER DEVELOPMENT**
 
 ## Mobile app
 The mobile app, as of now, is still under development. We've started working on it and will be rolling it out soon. Until then, feel free to use our website on your mobile
