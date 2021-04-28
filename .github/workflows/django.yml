@@ -29,5 +29,7 @@ jobs:
       - name: Running Tests
         env: # Or as an environment variable
           SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK }}
+          CUTTLY_API_KEY: ${{secrets.CUTTLY_API_KEY}}
+          MODE_DJANGO_BANK: ${{secrets.MODE_DJANGO_BANK}}
         run: |
           python manage.py test
