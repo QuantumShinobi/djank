@@ -20,7 +20,7 @@ Now u can perform transactions - add or withdraw money, see your transaction his
 
 Spoiler :  Soon, you'll also be able to transfer money to other accounts.
 ### Have an error ?
-Djank is maintained by us, as a hobby. Altough it's tried and tested multiple times, there's a change that you may come across a bug 🐛 or error.
+Djank is maintained by us, as a hobby. Altough it's tried and tested multiple times, there's a small chance that you may come across a bug 🐛 or error.
 
 So....
 
