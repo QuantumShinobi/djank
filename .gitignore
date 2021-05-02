@@ -132,3 +132,7 @@ dmypy.json
 *.env
 # Workflow
 api/tests.py
+
+
+# Format HTML
+format.html

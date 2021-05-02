@@ -3,19 +3,34 @@
 {% block body %}
 {% load static %}
 <script src="{% static 'bank.js' %}"></script>
-<h1 style="display:none;"class="alert alert-danger"></h1>
+<div id="non-animation">
+<div style="display:none;"class="alert alert-danger" id="amount_less">The amount for transfer is less than your bank balance</div>
+<div style="display:none;"class="alert alert-success" id="transferred">Your transfer has been completed</div>
+<div style="display:none;"class="alert alert-success" id="email_added">Your email was added and we have sent a verification email to your inbox. Please check it to verify your email</div>
+
+
 <div id="main" style="display:block;">
 
 <div style="display: flex;justify-content: space-between;"class="flex">
 <div class="flex-one">
-<h1 class="has-text-weight-medium">Hi {{user.name}}</h1>
+<h1 id="name" class="has-text-weight-medium">Hi {{user.name}}</h1>
 </div>
+<div style="display:flex; flex-direction:column;" class="flex-3">
+<a href="{% url 'main:friends' %}">
+<i class="fa-4x fas fa-user-friends" style="text-decoration:none;"></i>
+<br>
+&nbsp;<span class="text-xl">Friends</span>
+</a>
+</div>
+
+
 <div style="display:flex; flex-direction:column;" class="flex-2">
 <a href="{% url 'main:account' %}">
 <i style="text-decoration:none;" class="fa-4x fas fa-cogs" id="icon"></i>
 <br>
 &nbsp;<span class="text-xl">Settings</span>
 </a>
+
 </div>
 </div>
 
@@ -38,6 +53,9 @@ Add money
 <button class="btn btn-primary" onclick="withdraw()">
 Withdraw Money
 </button>
+<button class="btn btn-primary" onclick="transfer()">
+Transfer money to your friends
+</button>
 <button class="btn btn-primary" onclick="back()">
 Go back
 </button>
@@ -52,7 +70,7 @@ Go back
 <div class="row g-1 align-items-center">
 <div class="col-auto">
 <b><label class="has-text-weight-bold  has-text-centered is-size-5" for="add_amount">Amount to add</label></b>
-<input class="form-control" type="text" placeholder="Amount to add" name="add_amount" id="add_amount" required>
+<input onkeypress="return noenter()" class="form-control" type="text" placeholder="Amount to add" name="add_amount" id="add_amount" required>
 <br>
 <span id="add_btn"  class="btn btn-primary" value="Add money">Add money</span>
 </div>
@@ -74,7 +92,7 @@ Go back
 <div class="row g-1 align-items-center">
   <div class="col-auto">
 <b><label class="has-text-weight-bold  has-text-centered is-size-5" for="withdraw_amount">Amount to withdraw</label></b>
-<input class="form-control" type="text" placeholder="Amount to withdraw" name="withdraw_amount" id="withdraw_amount" required>
+<input onkeypress="return noenter()" class="form-control" type="text" placeholder="Amount to withdraw" name="withdraw_amount" id="withdraw_amount" required>
 <br>
 <span class="btn btn-primary" id="minus_btn" value="withdraw money">Withdraw money</span>
   </div>
@@ -87,6 +105,40 @@ Go back
 Go back
 </button>
 </div>
+
+
+{% comment %} Transfer money form {% endcomment %}
+<div style="display:none;" id="transfer">
+<form id="transfer_form" action="{% url 'main:transfer' %}" method="post">
+{% csrf_token %}
+<div class="row g-1 align-items-center">
+  <div class="col-auto">
+<b><label class="has-text-weight-bold  has-text-centered is-size-5" for="amount">Amount to transfer</label></b>
+<input onkeypress="return noenter()" class="form-control" type="text" placeholder="Amount to transfer" name="amount" id="amount" required>
+<br> 
+<select class="form-select form-select-lg mb-3" name="username" id="username">
+
+{% for friend in friends %}
+<option value="{{friend.username}}">{{friend.username}}</option>
+{% endfor %}
+</select>
+<br>
+<br>
+<button type="submit" class="btn btn-primary" id="transfer_btn" />
+Transfer money
+</span>
+  </div>
+  </div>
+
+<br>
+
+</form>
+<button class="btn btn-primary" onclick="back()">
+Go back
+</button>
+</div>
+
+
 
 {% comment %} DeleteAccount Popup {% endcomment %}
 <div class="modal" id="popUp">
@@ -106,5 +158,15 @@ Go back
 
 </div>
 
+</div>
 
+<div id="animation" style="display:none;">
+<h1 class="text-center" id="animation-text">Performing transaction</h1>
+<br>
+<div class="cssload-loader">
+	<div class="cssload-inner cssload-one"></div>
+	<div class="cssload-inner cssload-two"></div>
+	<div class="cssload-inner cssload-three"></div>
+</div>
+</div>
 {% endblock body %}

@@ -4,18 +4,58 @@
 {% load static %}
     
 <script src="{% static 'account.js' %}"></script>
+{% comment %} ALERT MSGS {% endcomment %}
+<div id="non-animation">
 <div class=" alert alert-primary" style="display:none;" id="pwd_change_alert">Your password has been changed </div>
 <div class=" alert alert-primary" style="display:none;" id="t_list_erase">Your transaction history was deleted </div>
+<div class=" alert alert-primary" style="display:none;" id="discord_account_linked">Your discord account was linked</div>
+<div class=" alert alert-warning" style="display:none;" id="discord_account_unlinked">Your discord account was unlinked</div>
 
+<div class=" alert alert-danger" style="display:none;" id="format_incorrect">The format of your discord username was incorrect, so it has <b>NOT</b> been linked </div>
+
+
+{% comment %} ACCOUNT INFO {% endcomment %}
 <div id="main" class="shadow-none p-3 mb-5 bg-light rounded">
 <h1 class="text">Your account info</h1>
+{% if warning %}
+<div class="alert alert-warning">{{warning}}</div>
+{% endif %}
+{% if warning2 %}
+<div class="alert alert-warning">{{warning2}}</div>
+{% endif %}
 <ul>
 <h3 class="text text-primary"> Name  - {{user.name}}</h3>
 <h3 class="text text-primary"> Balance  - {{user.bank_balance}}</h3>
 <h3 class="text text-primary"> Username  - {{user.username}}</h3>
+<h3 class="text text-primary"> Email  - {{user.email}}</h3>
+<h3 class="text text-primary"> Verified Email  - {{user.email_is_verified}}</h3>
 
+{% if discord_account %}
+<h3 class="text text-primary">Discord Username  -{{discord_account.discord_username}}</h3>
+<form action="{% url 'main:unlink_discord' %}" method="post">
+{% csrf_token %}
+<input type="submit" value="Unlink Discord" class="btn btn-primary">
+</form>
+{% else %}
+<h3 class="text text-warning">Discord Account is not linked</h3>
+<btn class="btn btn-primary" id="link-discord" onclick="link_discord()">Link Discord</btn>
+
+{% endif %}
+
+<br>
+<br>
+{% if warning %}
+<button onclick="email_form()" class="btn btn-primary">
+Add email
+</button>
+{% else %}
+<a href="{% url 'main:add_email' %}" class="btn btn-danger">
+Unlink email
+</a>
+{% endif %}
 </ul>
 <br>
+
 <a class="btn btn-primary" href="/site/index">
 Go back
 </a>
@@ -23,6 +63,42 @@ Go back
 See transaction history</a>
 <button class="btn btn-dark" onclick="show_pwd_form()">Change Password</button>
 </div>
+
+
+{% comment %} EMAIL FORM {% endcomment %}
+
+<div style="display:none;" id="email_form">
+<form action="{% url 'main:add_email' %}" method="post">
+{% csrf_token %}
+<div class="row g-1 align-items-center">
+<div class="col-auto">
+<b><h1 class="has-text-weight-bold  has-text-centered is-size-5" for="email">Discord username</h1></b>
+<br>
+<input class="form-control" type="email" placeholder="Email" name="email" id="email" required>
+<br>
+</div></div>
+<span class="btn btn-success" onclick="back()">Go back</span>
+<input id="add_mail_submit" type="submit" value="Add email" class="btn btn-primary">
+</form>
+</div>
+
+
+{% comment %} LINK DISCORD {% endcomment %}
+<div style="display:none;" id="discord_form">
+<form action="{% url 'main:link_discord' %}" method="post">
+{% csrf_token %}
+<div class="row g-1 align-items-center">
+<div class="col-auto">
+<b><h1 class="has-text-weight-bold  has-text-centered is-size-5" for="username">Discord username</h1></b>
+<br>
+<input class="form-control" type="text" placeholder="DiscordUsername#0000" name="username" id="username" required>
+<br>
+</div></div>
+<span class="btn btn-success" onclick="back()">Go back</span>
+<input type="submit" value="Link discord" class="btn btn-primary">
+</form>
+</div>
+
 
 {% comment %} CHANGE PASSWORD FORM {% endcomment %}
 <div style="display:none;" id="pwd_form">
@@ -46,23 +122,29 @@ See transaction history</a>
   <input type="submit" value="Yes, Change it" name="submit" class="btn btn-primary shadow-lg">
   <br>
   <span onclick="cancel()" class="btn btn-success">No, Go Back</span>
-  </form>
+
   
   </span> 
-
-</div>
-
-
-
-
-</div>
-</div>
 </form>
 
-<br>
+</div>
+
+</div>
+</div>
+</div>
 </div>
 
 
+
+<div id="animation" style="display:none;">
+<h1 class="text-center" id="animation-text">Trying to add your mail</h1>
+<br>
+<div class="cssload-loader">
+	<div class="cssload-inner cssload-one"></div>
+	<div class="cssload-inner cssload-two"></div>
+	<div class="cssload-inner cssload-three"></div>
+</div>
+</div>
 {% endblock body %}
 
 

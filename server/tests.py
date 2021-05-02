@@ -22,4 +22,4 @@ class UserTestCase(TestCase):
     def test_overall(self):
         user = User.objects.get(unique_id=self.uuid)
         self.assertEqual(bcrypt.checkpw(
-            bytes(self.pwd, 'utf-8'), user.password), True)
+            bytes(self.pwd, 'utf-8'), user.password.tobytes()), True)

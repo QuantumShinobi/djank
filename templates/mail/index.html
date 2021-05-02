@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<div id="non-animation">
+<div style="display:none;" id="invalid" class="alert alert-danger">
+<h2>Your account was not found, so no mail has been sent. Kindly double check the username (It's case sensitive)</h2>
+</div>
+
+<div style="display:none;" id="email_invalid" class="alert alert-danger">
+You have not linked an email to your djank account. So, pls make a new account. Your old account will be deleted after 60 days to inactivity.
+</div>
+<div style="display:none;" id="not_verified" class="alert alert-warning">
+You have not verified the mail which has been linked to your djank account. So, pls make a new account. Your old account will be deleted after 60 days to inactivity.
+</div>
+
+
+<form id="reset_pwd_form" action="{% url 'mail:index' %}" method="post">
+
+
+
+<div id="info-div" class="alert alert-info">
+
+If you've not linked your email, then you will not be able to reset your password.
+So, kindly make a new account in this case.
+Your old account will be deleted after 60 days of inactivity.
+<br>
+But, if you've linked an email to your account and verified it, we'll automatically send an email to your inbox.</div>
+<br>
+{% csrf_token %}
+<div class="row g-10 align-items-center">
+  <div class="col-auto">
+<input class=" form-control-lg form-control" type="text" name="username" placeholder="Djank Username" id="name" required>
+</div>
+</div>
+<br><br>
+<input class="btn btn-outline-primary" id="submit" type="submit" value="Reset Password">
+<a class="btn btn-outline-info" href="{% url 'main:index' %}">Go back</a>
+</form>
+</div>
+
+
+<div style="display:none;"id="animation">
+
+<h1 class="text-center" id="animation-text">Trying to send a mail</h1>
+<br>
+<div class="cssload-loader">
+	<div class="cssload-inner cssload-one"></div>
+	<div class="cssload-inner cssload-two"></div>
+	<div class="cssload-inner cssload-three"></div>
+</div>
+</div>
+
+
+
+<script>
+function clear_query_string() {
+  var uri = window.location.toString();
+  if (uri.indexOf("?") > 0) {
+    var clean_uri = uri.substring(0, uri.indexOf("?"));
+    window.history.replaceState({}, document.title, clean_uri);
+  }
+}
+const params = new URLSearchParams(window.location.search);
+document.addEventListener("DOMContentLoaded", () => {
+if (params.get("invalid")==="true"){
+    document.getElementById("invalid").style.display = "block";
+    document.getElementById("info-div").style.display = "none";
+
+    clear_query_string();
+}})
+if(params.get("mail_invalid")==="true"){
+    document.getElementById("email_invalid").style.display = "block";
+    document.getElementById("info-div").style.display = "none";
+
+    clear_query_string();
+
+}
+if (params.get("not_verified")==="true"){
+    document.getElementById("not_verified").style.display = "block";
+    document.getElementById("info-div").style.display = "none";
+
+    clear_query_string();
+
+}
+
+submit = document.getElementById("submit");
+  submit.onclick = () => {
+    document.getElementById("non-animation").style.display = "none";
+    document.getElementById("animation").style.display = "block";
+    document.getElementById("reset_pwd_form").submit();
+  };
+</script>
+
+{% endblock body %}

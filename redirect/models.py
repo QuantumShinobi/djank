@@ -25,3 +25,14 @@ class Redirect(models.Model):
         max_length=10485700, editable=True, null=True, default=None)
     link10 = models.CharField(
         max_length=10485700, editable=True, null=True, default=None)
+
+
+class RedirectLink(models.Model):
+    link = models.CharField(max_length=10485700)
+    unique_id = models.UUIDField(
+        default=uuid.uuid4, unique=True, editable=False)
+    url = models.CharField(max_length=10485700, null=True)
+
+    def get_url(self=None, request=None):
+        host = request.META['HTTP_HOST']
+        return f"http://{host}/r/{self.unique_id}"

@@ -31,11 +31,19 @@
 
 
 {% if error %}
-<h1>{{error}}</h1>{% endif %}
+<h3>{{error}}</h3>{% endif %}
+<h3>Redirecting you to home page...</h3>
 
 </div>
 <h1><a class="btn btn-dark" href="{% url 'main:index'%}">Go to main page</a>
 </h1>
 <br><br>
 </body>
+<script>
+url =window.location.origin 
+setTimeout(function(){window.location.replace(`${url}/site/index`)},2300)
+</script>
+
+
+
 </html>

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}
+Reset Password
+{% endblock title %}
+{% block body %}
+
+<form action="{% url 'mail:reset_password' %}" method="post">
+
+{% csrf_token %}
+<h1>Hi {{user.name}},
+<br>
+You can reset your password here
+</h1>
+<br>
+
+<input class="form-control" name="username" type="text" placeholder="Djank Username" required>
+<br>
+<br>
+
+<input class="form-control" name="new_password" type="password" placeholder="New Password" required>
+<br>
+<br>
+<span class="btn btn-danger" onclick="WarningPopup()" value="Change password">Change password </span>
+<span class="btn btn-success" onclick="back()">Go back</span>
+
+<div class="modal" id="popUp">
+{% csrf_token %}
+  <span class="modal-content"  id="myPopup">
+  <h1 class="text"><u>Warning</u> ⚠</h1>
+  <h2 class="text">Are you sure that you want to change your passoword ?</h2>
+  <h4 class="text"> <b>THIS ACTION IS IRREVERSIBLE</b></h4>
+  <br>
+  <input type="submit" value="Yes, Change it" name="submit" class="btn btn-primary shadow-lg">
+  <br>
+  <span onclick="cancel()" class="btn btn-success">No, Go Back</span>
+  
+  </span> 
+</form>
+
+
+
+{% endblock body %}

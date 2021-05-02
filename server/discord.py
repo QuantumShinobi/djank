@@ -7,7 +7,7 @@ def format_is_correct(username):
     only_whitespace = r'\s*#\d{4}'
     res = re.fullmatch(format, username)
     res2 = re.fullmatch(only_whitespace, username)
-    if res2:
+    if res2 != None:
         res = "Blank Username"
 
     print(res)

@@ -14,8 +14,21 @@ jobs:
       matrix:
         python-version: [3.8.8]
 
+    services:
+      postgres:
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v2
+      - name: psycopg2 prerequisites
+        run: sudo apt-get install libpq-dev
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -25,11 +38,18 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Running Tests
+      - name: Run migrations
+        run: python manage.py migrate
         env: # Or as an environment variable
-          SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK }}
-          CUTTLY_API_KEY: ${{secrets.CUTTLY_API_KEY}}
+          SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK}}
+          MAIL_VERIFY_PASSWORD: ${{secrets.MAIL_VERIFY_PASSWORD}}
           MODE_DJANGO_BANK: ${{secrets.MODE_DJANGO_BANK}}
+          MAIL_VERIFY_EMAIL: ${{secrets.MAIL_VERIFY_EMAIL}}
+      - name: Running Tests
+        env:
+          SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK}}
+          MAIL_VERIFY_PASSWORD: ${{secrets.MAIL_VERIFY_PASSWORD}}
+          MODE_DJANGO_BANK: ${{secrets.MODE_DJANGO_BANK}}
+          MAIL_VERIFY_EMAIL: ${{secrets.MAIL_VERIFY_EMAIL}}
         run: |
           python manage.py test

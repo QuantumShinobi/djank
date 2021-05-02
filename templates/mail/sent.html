@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}
+Mail Sent
+{% endblock title %}
+{% block body %}
+<h1 class="text-primary">Mail Has been sent</h1>
+<h4 class="text-danger">Can't find it -> Check the spam folder</h4>
+<h5>This mail will be work for the next 2 hrs only</h5>
+
+<a href="{% url 'main:index' %}" class="btn btn-outline-primary"> Go back</a>
+{% endblock body %}

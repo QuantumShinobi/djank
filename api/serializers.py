@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 class BotLoginSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=200)
     username = serializers.CharField(max_length=200)
-    id = models.IntegerField()
+    id = serializers.IntegerField()
     bot_key = serializers.CharField(max_length=200)
-    discord_username = serializers.CharField(max_length=37)
+    discord_username = serializers.CharField(max_length=40)
+
