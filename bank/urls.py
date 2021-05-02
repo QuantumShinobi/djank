@@ -22,6 +22,7 @@ urlpatterns = [
     path('', include('redirect.urls')),
     # path('api/', include('api.urls')),
     path('mail/', include('mail.urls'))
+
 ]
 handler404 = 'redirect.views.error_404'
 handler500 = 'redirect.views.server_error'

@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
 from django.views import View
+
 from mail.mail import *
 # Create your views here.
 
@@ -16,11 +17,14 @@ class IndexView(View):
             user = User.get_user(request=request)
             friends = user.get_friends()
             # if user.warned_email == False and user.email:
+            return render(request, 'main/index.html', context={"user": user})
+        else:
+            return User.get_user(request=request)
+
 
             return render(request, 'main/index.html', context={"user": user, "friends": friends})
         else:
             return User.get_user(request=request)
-
 
 class LoginView(View):
     def get(self, request):
