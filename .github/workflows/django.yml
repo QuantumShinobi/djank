@@ -32,9 +32,16 @@ jobs:
           postgresql version: "13.2"
       - name: Run migrations
         run: python manage.py migrate
-      - name: Running Tests
         env: # Or as an environment variable
-          SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK }}
-
+          SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK}}
+          MAIL_VERIFY_PASSWORD: ${{secrets.MAIL_VERIFY_PASSWORD}}
+          MODE_DJANGO_BANK: ${{secrets.MODE_DJANGO_BANK}}
+          MAIL_VERIFY_EMAIL: ${{secrets.MAIL_VERIFY_EMAIL}}
+      - name: Running Tests
+        env:
+          SECRET_KEY_DJANGO_BANK: ${{ secrets.SECRET_KEY_DJANGO_BANK}}
+          MAIL_VERIFY_PASSWORD: ${{secrets.MAIL_VERIFY_PASSWORD}}
+          MODE_DJANGO_BANK: ${{secrets.MODE_DJANGO_BANK}}
+          MAIL_VERIFY_EMAIL: ${{secrets.MAIL_VERIFY_EMAIL}}
         run: |
           python manage.py test
