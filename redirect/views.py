@@ -61,7 +61,6 @@ def create_link(request):
         r_list = [link1, link2, link3, link4, link5,
                   link6, link7, link8, link9, link10]
         host = request.META['HTTP_HOST']
-
         l1 = RedirectLink.objects.create(link1)
         l1.save()
         l2 = RedirectLink.objects.create(link2)
@@ -93,6 +92,7 @@ def create_link(request):
         link1 = l1.link
         link1 = l1.link
         link1 = l1.link
+
         # print(r_list)
         # link = f"http://{host}/redirect?link1={link1}&link2={link2}&link3={link3}&link4={link4}&link5={link5}&link6={link6}&link7={link7}&link8={link8}&link9={link9}&link10={link10}"
         new_redirect = Redirect.objects.create(
@@ -112,7 +112,6 @@ def create_link(request):
         return HttpResponse(link)
 
 
-
 def redirect_link(request, id):
     try:
         url = RedirectLink.objects.get(unique_id=id)
@@ -120,4 +119,3 @@ def redirect_link(request, id):
         raise Http404
     else:
         return redirect(url.url)
-
