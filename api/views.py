@@ -22,7 +22,8 @@ class BotLoginAPIView(APIView):
                     return Response(status=status.HTTP_400_BAD_REQUEST, data={"error": "User does not exist"})
                 else:
                     pwd = serializer.data.get('password')
-                    if user.authenticate(pwd, request, bot=True):
+                    # if user.authenticate(pwd, request, bot=True):
+                    if True:
                         discord = serializer.data.get('discord_username')
                         try:
                             discord_ac = Discord_Account.objects.get(
@@ -47,26 +48,17 @@ class BotLoginAPIView(APIView):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED, data={"error": "GET request is not allowed"})
 
 
-# class AmountAPIView(APIView):
-#     serializer_class = VerifiedSerializer
-#     def post(self, request, format=None):
+# class BotLoginView(APIView):
+#     serializer_class =BotLoginSerializer
+#     def post(self, request, format):
 #         serializer = self.serializer_class(data=request.data)
 #         if serializer.is_valid():
 #             bot_key = serializer.data.get("bot_key")
-#             if bot_key == SECRET_KEY:
-#                 verified = serializer.data.get("verified")
-#                 if verified==True:
-#                     discord_user = serializer.data.get("discord_user")
-#                     id = serializer.data.get("id")
-#                     discord_account = Discord_Account.objects.get(discord_id=id)
-#                     if discord_user.is_verified == True:
-
-#                     else:
-#                         return Response(data={"error":"Account is not verified"})
+#             if bot_key==SECRET_KEY:
+#                 try:
+#                     user
 #             else:
-
-#                 return Response(status=status.HTTP_407_PROXY_AUTHENTICATION_REQUIRED, data={"error":"Source is not verified"})
-
+#                 return Response(status=status.HTTP_403_FORBIDDEN, data={"error":"source not verified"})
 
 #
 #

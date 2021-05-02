@@ -15,6 +15,12 @@ urlpatterns = [
     path("cp", change_pwd, name="change_pwd"),
     path("t_list", transaction_list, name="transaction_list"),
     path("d_list", delete_transaction_history, name="delete_transactions"),
-    path("transaction/<str:transaction_id>", transaction, name="transaction")
+    path("transaction/<str:transaction_id>", transaction, name="transaction"),
+    path("link_d", LinkDiscordView.as_view(), name="link_discord"),
+    path("unlink_d", UnlinkDiscordView.as_view(), name="unlink_discord"),
+    path("friends", FriendsView.as_view(), name="friends"),
+    path("addFriends", AddFriends.as_view(), name="add_friends"),
+    path('tMoney', TransferView.as_view(), name="transfer"),
+    path('aMail', AddEmailView.as_view(), name="add_email")
 
 ]

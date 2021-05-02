@@ -41,6 +41,7 @@ wcwidth = "==0.2.5"
 ipython_genutils = "==0.2.0"
 Pygments = "==2.8.1"
 geoip2 = "*"
+validate-email = "*"
 
 [dev-packages]
 

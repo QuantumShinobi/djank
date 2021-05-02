@@ -1,11 +1,12 @@
 import bcrypt
 from django.core.exceptions import ValidationError
-from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
+from django.http.response import Http404, HttpResponse
 from .discord import *
 from django.shortcuts import redirect, render
 from .models import *
 from .gen import *
 from django.views import View
+from mail.mail import *
 # Create your views here.
 
 
@@ -13,7 +14,10 @@ class IndexView(View):
     def get(self, request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
-            return render(request, 'main/index.html', context={"user": user})
+            friends = user.get_friends()
+            # if user.warned_email == False and user.email:
+
+            return render(request, 'main/index.html', context={"user": user, "friends": friends})
         else:
             return User.get_user(request=request)
 
@@ -35,6 +39,7 @@ class SignedUpView(View):
         except KeyError:
             username = request.POST['username']
             password = request.POST['password']
+            email = request.POST.get('email')
             name = request.POST['name']
             discord_username = request.POST['discord_username']
             if User.objects.filter(username=username).exists() == True:
@@ -45,26 +50,26 @@ class SignedUpView(View):
                 hash_pwd = bcrypt.hashpw(
                     bytes(password, 'utf-8'), bcrypt.gensalt())
                 name = name.capitalize()
+
                 new_user = User.objects.create(
 
                     username=username, password=hash_pwd, name=name)
+                if email.isspace() == False and email != "":
+                    new_user.email = email
+                    new_user.save()
                 response = render(request, 'main/logout.html',
                                   context={"title": "Sign up", "text": "Creating your account"})
                 response.set_cookie("user-identity", str(new_user.unique_id))
-                # and re.search(r"\w", discord_username) and format_is_correct(username):
-                if discord_username != "":
+                if discord_username != "" and discord_username.isspace() == False:
                     check = format_is_correct(discord_username)
                     if check == None or check == "Blank Username":
-                        # note = "Your discord account was not connected either because the field was blank or because the format was not correct"
                         response.set_cookie(
                             "discord_account", "None")
                     else:
                         response.set_cookie(
                             "discord_account", "True")
-
-                    new_discord_ac = Discord_Account.objects.create(
-                        user=new_user, discord_username=discord_username)
-                    # response.set_cookie("discord_account", "yes")
+                        new_discord_ac = Discord_Account.objects.create(
+                            user=new_user, discord_username=discord_username)
                 return response
         else:
             return redirect("main:index")
@@ -159,7 +164,23 @@ def del_account(request):
 def account(request):
     if isinstance(User.get_user(request=request), User):
         user = User.get_user(request=request)
-        return render(request, "main/account.html", context={"user": user})
+        try:
+            discord_account = Discord_Account.objects.get(user=user)
+        except Discord_Account.DoesNotExist:
+            if user.email == None:
+                return render(request, "main/account.html", context={"user": user, "warning": "Your email has not been linked, so if you forget your password, you will not be able to reset it."})
+            elif user.email_is_verified == False:
+                return render(request, "main/account.html", context={"user": user, "warning2": "Your email has not been verified, so if you forget your password, you will not be able to reset it."})
+            else:
+                return render(request, "main/account.html", context={"user": user})
+        else:
+            if user.email == None:
+                return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": "Your email has not been linked, so if you forget your password, you will not be able to reset it."})
+            elif user.email_is_verified == False:
+                return render(request, "main/account.html", context={"user": user,  "discord_account": discord_account, "warning2": "Your email has not been verified, so if you forget your password, you will not be able to reset it."})
+            else:
+                return render(request, "main/account.html", context={"user": user, "discord_account": discord_account})
+
     else:
         return User.get_user(request)
 
@@ -214,3 +235,107 @@ def transaction(request, transaction_id):
         return render(request, "main/transaction.html", context={"transaction": transaction, "user": user})
     except (Transaction.DoesNotExist, KeyError, ValidationError):
         return HttpResponse("Invalid ID")
+
+
+class LinkDiscordView(View):
+    def post(self, request):
+        user = User.get_user(request=request)
+        discord_username = request.POST['username']
+        if format_is_correct(discord_username) != "Blank Username" and format_is_correct(discord_username) != None:
+            new_discord_account = Discord_Account.objects.create(
+                discord_username=discord_username, user=user)
+            new_discord_account.save()
+            host = request.META['HTTP_HOST']
+            return redirect(f"http://{host}/site/yourAccount?discord_account_linked=true")
+        else:
+            host = request.META['HTTP_HOST']
+            return redirect(f"http://{host}/site/yourAccount?format_incorrect=true")
+
+
+class UnlinkDiscordView(View):
+    def post(self, request):
+        user = User.get_user(request=request)
+
+        try:
+            new_discord_account = Discord_Account.objects.get(user=user)
+            new_discord_account.delete()
+        except (Discord_Account.DoesNotExist):
+            pass
+        host = request.META['HTTP_HOST']
+        return redirect(f"http://{host}/site/yourAccount?discord_account_unlinked=true")
+
+
+# FRIENDS
+class FriendsView(View):
+    def get(self, request):
+        if isinstance(User.get_user(request=request), User):
+            user = User.get_user(request=request)
+            return render(request, "main/friends.html", context={"friends": user.get_friends()})
+        else:
+            return User.get_user(request=request)
+
+
+class AddFriends(View):
+    def get(self, request):
+        if isinstance(User.get_user(request=request), User):
+            user = User.get_user(request=request)
+            return render(request, "main/add_friends.html", context={"user": user})
+        else:
+            return User.get_user(request=request)
+
+    def post(self, request):
+        friend_username = request.POST['friend']
+        try:
+            friend = User.objects.get(username=friend_username)
+        except User.DoesNotExist:
+            return redirect(f"http://{request.META['HTTP_HOST']}/site/addFriends?doesnotexist=true")
+        else:
+            current_user = User.get_user(request=request)
+            current_user.add_friend(friend.username)
+            return redirect(f"http://{request.META['HTTP_HOST']}/site/addFriends?added=true")
+
+
+# Money transferring
+class TransferView(View):
+    def get(self, request):
+        raise Http404
+
+    def post(self, request):
+        amount = request.POST['amount']
+        recipient_username = request.POST['username']
+        sender = User.get_user(request=request)
+        recipient = User.objects.get(username=recipient_username)
+        try:
+            amount = int(amount)
+        except (ValueError, TypeError):
+            return render(request, "error.html", context={"error": "You cant transfer something other than money"})
+
+        recipient.bank_balance += int(amount)
+        if sender.bank_balance < int(amount):
+            return redirect(f"http://{request.META['HTTP_HOST']}/site/index?transfer_form=true&amount_less=true")
+        sender.bank_balance -= int(amount)
+        recipient.save()
+        sender.save()
+        return redirect(f"http://{request.META['HTTP_HOST']}/site/index?transferred=true")
+
+
+# Add email
+class AddEmailView(View):
+    def get(self, request):
+        if isinstance(User.get_user(request=request), User):
+            user = User.get_user(request=request)
+            user.email = None
+            user.email_is_verified = False
+            user.save()
+            return redirect("main:account")
+        else:
+            return User.get_user(request=request)
+
+    def post(self, request):
+        email = request.POST['email']
+        user = User.get_user(request=request)
+        user.email = email
+        user.save()
+        verifymail(email)
+        send_verify_mail(email, request, user)
+        return redirect(f"http://{request.META['HTTP_HOST']}/site/index?email_added=true")

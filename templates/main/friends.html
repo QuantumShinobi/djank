@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}
+Friends
+{% endblock title %}
+{% block body %}
+{% if friends %}
+<ul>
+    {% for friend in friends %}
+<li><h3>{{friend.username}}</h3>
+    {% endfor %}
+</ul>
+<br>
+<a href="{% url 'main:add_friends' %}" class="btn btn-success">Add friends</a>
+<a href="{% url 'main:index' %}" class="btn btn-primary">Go back</a>
+
+{% else %}
+<h1>You don't have any friends yet</h1>
+<br>
+<a href="{% url 'main:add_friends' %}" class="btn btn-success">Add friends</a>
+<a href="{% url 'main:index' %}" class="btn btn-primary">Go back</a>
+
+{% endif %}
+
+
+
+
+{% endblock body %}

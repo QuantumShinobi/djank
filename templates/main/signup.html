@@ -5,45 +5,114 @@
 {% if error %}
 <div  role="alert"class="alert alert-danger">{{error}}</div>
 {% endif %}
-<form action="{% url 'main:signed_up' %}" method="post">
 
+
+
+<form id="login-form "action="{% url 'main:signed_up' %}" method="post">
 {% csrf_token %}
-<h1 class="has-text-weight-bold   has-text-centered is-size-1">Sign up</h1>
-<div class="row g-1 align-items-center">
-  <div class="col-auto">
-<label class="has-text-weight-medium  has-text-centered is-size-5" for="name">Name</label>
-<input class="form-control" type="text" placeholder="Name" name="name" id="name" required>
-  </div>
-  </div>
-</div>
-<br>
+ <h1 class="has-text-weight-bold has-text-centered is-size-1">Sign up</h1>
+      <div class="row g-1 align-items-center">
+        <div class="col-auto">
+          <label
+            class="has-text-weight-medium has-text-centered is-size-5"
+            for="name"
+            >Name</label
+          >
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Name"
+            name="name"
+            id="name"
+            required
+          />
+        </div>
+      </div>
 
-<div class="row g-1 align-items-center">
-  <div class="col-auto">
-<label class="has-text-weight-medium  has-text-centered is-size-5" for="username">Username</label>
-<input class="form-control" aria-describedby="UsernameHelpInline" type="text" placeholder="Username" name="username" id="username" required>
-  </div>
-  </div>
-</div>
-<br>
-<div class="row g-10 align-items-center">
-  <div class="col-auto">
-<label class="has-text-weight-medium  has-text-centered is-size-5" for="password">Password</label>
-<input class="form-control" aria-describedby="passwordHelpInline" type="password" placeholder="Password" name="password" id="password" required>
-  </div>
-  </div>
-</div>
-<br>
-<div class="row g-1 align-items-center">
-  <div class="col-auto">
-<label class="has-text-weight-medium  has-text-centered is-size-5" for="discord_username">Discord Username (Optional)</label>
-<input class="form-control" type="text" placeholder="Discord Username" name="discord_username" id="discord_username" Optional>
-  </div>
-  </div>
-<br><input class="btn btn-primary" type="submit" value="Sign Up" required>
-</form>
-<br>
+      <br />
 
-<a class="btn-link" href="{% url 'main:login'%}">Already have an account, Login</a>
+      <div class="row g-1 align-items-center">
+        <div class="col-auto">
+          <label
+            class="has-text-weight-medium has-text-centered is-size-5"
+            for="username"
+            >Username</label
+          >
+          <input
+            class="form-control"
+            aria-describedby="UsernameHelpInline"
+            type="text"
+            placeholder="Username"
+            name="username"
+            id="username"
+            required
+          />
+        </div>
+      </div>
+      <br />
+      <div class="row g-10 align-items-center">
+        <div class="col-auto">
+          <label
+            class="has-text-weight-medium has-text-centered is-size-5"
+            for="password"
+            >Password</label
+          >
+          <input
+            class="form-control"
+            aria-describedby="passwordHelpInline"
+            type="password"
+            placeholder="Password"
+            name="password"
+            id="password"
+            required
+          />
+        </div>
+      </div>
+      <br />
 
+      <div class="row g-1 align-items-center">
+        <div class="col-auto">
+          <label
+            class="has-text-weight-medium has-text-centered is-size-5"
+            for="email"
+            >Email</label
+          >
+          <input
+            class="form-control"
+            type="email"
+            placeholder="Email (Optional)"
+            name="email"
+            id="email"
+          />
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row g-1 align-items-center">
+        <div class="col-auto">
+          <label
+            class="has-text-weight-medium has-text-centered is-size-5"
+            for="discord_username"
+            >Discord Username (Optional)</label
+          >
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Discord Username"
+            name="discord_username"
+            id="discord_username"
+            Optional
+          />
+        </div>
+      </div>
+      <br />
+
+    <input id="sign-up" class="btn btn-primary" type="submit" value="Sign Up" required />
+    </form>
+    <br />
+
+    <a class="btn-link" href="{% url 'main:login'%}">
+      Already have an account, Login</a
+    >
 {% endblock body %}

@@ -16,9 +16,3 @@ class BotLoginSerializer(serializers.Serializer):
     bot_key = serializers.CharField(max_length=200)
     discord_username = serializers.CharField(max_length=40)
 
-    # # TODO: Make Other Bot APIs
-# class VerifiedSerializer(serializers.Serializer):
-#     discord_username = serializers.CharField(max_length=40)
-#     id = models.IntegerField()
-#     bot_key = serializers.CharField(max_length=400)
-#     verified  = serializers.BooleanField()

@@ -11,11 +11,16 @@ class User(models.Model):
     password = models.BinaryField(editable=True)
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(null=True)
+    email_is_verified = models.BooleanField(default=False)
     bank_balance = models.IntegerField(default=100)
     unique_id = models.UUIDField(
         unique=True, default=uuid.uuid4, editable=False)
     transaction_list = models.CharField(
         max_length=10485700, null=True, default=None)
+    friends_list = models.CharField(
+        max_length=10485700, null=True, default=None)
+    no_of_friends = models.IntegerField(default=0)
+    warned_email = models.BooleanField(default=False, editable=True)
 
     def __str__(self):
         return self.username
@@ -61,7 +66,7 @@ class User(models.Model):
     def get_user(self=None, request=None):
         try:
             request.COOKIES['user-identity']
-        except (KeyError):
+        except (KeyError, AttributeError):
             return redirect("main:login")
         else:
             id = request.COOKIES['user-identity']
@@ -74,6 +79,38 @@ class User(models.Model):
                 return res
             else:
                 return user
+
+    def get_friends(self):
+        jsonDec = json.decoder.JSONDecoder()
+        friends_list = []
+        try:
+            for id in jsonDec.decode(self.friends_list):
+                frnd = User.objects.get(unique_id=id)
+                friends_list.append(frnd)
+
+            return friends_list
+        except (User.DoesNotExist, TypeError, json.decoder.JSONDecodeError):
+            return None
+
+    def add_friend(self, username):
+        jsonDec = json.decoder.JSONDecoder()
+        friends_list = []
+        try:
+            for id in jsonDec.decode(self.friends_list):
+                friends_list.append(id)
+        except (User.DoesNotExist, TypeError):
+            friends_list = []
+        try:
+            friend = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return False
+        else:
+            if friend.unique_id == self.unique_id:
+                return False
+            friends_list.append(str(friend.unique_id))
+            self.friends_list = json.dumps(list(set(friends_list)))
+            self.save()
+            return True
 
     def logout(self=None, request=None):
         try:

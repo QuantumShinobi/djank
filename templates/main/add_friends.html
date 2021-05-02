@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Add Friends
+{% endblock title %}
+{% block body %}
+{% if user %}
+<script src="{% static 'friends.js' %}"></script>
+
+<div id="doesnotexist" class="alert alert-danger" style="display:none;">The account of your friend was not found, so no friend has been added. Kindly, double-check the username (It's case sensitive)</div>
+<div id="friend_added" class="alert alert-success" style="display:none;">Your friend has been added, now to can tranfer money to him/her.</div>
+
+<h1>Add Friends</h1>
+
+<form action="{% url 'main:add_friends' %}" method="post">
+{% csrf_token %}
+<label for="friend">Friend username </label>
+<br>
+<input class="form-control" type="text" name="friend" placeholder="Friend Username (Usernames are case sensitive)" id="friend" required>
+<br>
+<input class="btn btn-success"type="submit" value="Add Friend">
+&nbsp;
+<a href="{% url 'main:index' %}" class="btn btn-primary">Go back</a>
+</form>
+
+{% endif %}
+{% endblock body %}
