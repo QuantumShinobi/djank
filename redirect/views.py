@@ -2,7 +2,6 @@ from django.core.exceptions import ValidationError
 from django.http.response import Http404
 from redirect.models import Redirect, RedirectLink
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.http import HttpResponse
 # Create your views here.
 
@@ -61,37 +60,36 @@ def create_link(request):
         r_list = [link1, link2, link3, link4, link5,
                   link6, link7, link8, link9, link10]
         host = request.META['HTTP_HOST']
-        l1 = RedirectLink.objects.create(link1)
+        l1 = RedirectLink.objects.create(link=link1)
         l1.save()
-        l2 = RedirectLink.objects.create(link2)
+        l2 = RedirectLink.objects.create(link=link2)
         l2.save()
-        l3 = RedirectLink.objects.create(link3)
+        l3 = RedirectLink.objects.create(link=link3)
         l3.save()
-        l4 = RedirectLink.objects.create(link4)
+        l4 = RedirectLink.objects.create(link=link4)
         l4.save()
-        l5 = RedirectLink.objects.create(link5)
+        l5 = RedirectLink.objects.create(link=link5)
         l5.save()
-        l6 = RedirectLink.objects.create(link6)
+        l6 = RedirectLink.objects.create(link=link6)
         l6.save()
-        l7 = RedirectLink.objects.create(link7)
+        l7 = RedirectLink.objects.create(link=link7)
         l7.save()
-        l8 = RedirectLink.objects.create(link8)
+        l8 = RedirectLink.objects.create(link=link8)
         l8.save()
-        l9 = RedirectLink.objects.create(link9)
+        l9 = RedirectLink.objects.create(link=link9)
         l9.save()
-        l10 = RedirectLink.objects.create(link10)
+        l10 = RedirectLink.objects.create(link=link10)
         l10.save()
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
-        link1 = l1.link
+        link1 = l1.get_url(request=request)
+        link2 = l2.get_url(request=request)
+        link3 = l3.get_url(request=request)
+        link4 = l4.get_url(request=request)
+        link5 = l5.get_url(request=request)
+        link6 = l6.get_url(request=request)
+        link7 = l7.get_url(request=request)
+        link8 = l8.get_url(request=request)
+        link9 = l9.get_url(request=request)
+        link10 = l10.get_url(request=request)
 
         # print(r_list)
         # link = f"http://{host}/redirect?link1={link1}&link2={link2}&link3={link3}&link4={link4}&link5={link5}&link6={link6}&link7={link7}&link8={link8}&link9={link9}&link10={link10}"
@@ -118,4 +116,4 @@ def redirect_link(request, id):
     except (AttributeError, RedirectLink.DoesNotExist):
         raise Http404
     else:
-        return redirect(url.url)
+        return redirect(url.link)

@@ -33,6 +33,8 @@ class RedirectLink(models.Model):
         default=uuid.uuid4, unique=True, editable=False)
     url = models.CharField(max_length=10485700, null=True)
 
-    def get_url(self=None, request=None):
+    def get_url(self, request=None):
         host = request.META['HTTP_HOST']
-        return f"http://{host}/r/{self.unique_id}"
+        self.url = f"http://{host}/r/{self.unique_id}"
+        self.save()
+        return self.url
