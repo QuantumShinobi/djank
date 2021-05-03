@@ -165,8 +165,8 @@ if MODE == "dev":
 elif MODE == "prod":
     import dj_database_url
     import django_heroku
-    db_from_env = dj_database_url.config(conn_max_age=600)
-    DATABASES['default'].update(db_from_env)
+    # db_from_env = dj_database_url.config(conn_max_age=600)
+    # DATABASES['default'].update(db_from_env)
     ALLOWED_HOSTS = ['*']
     DEBUG = False
     SESSION_COOKIE_SECURE = True
@@ -185,8 +185,8 @@ elif MODE == "prod":
 elif MODE == "test-prod":
     import dj_database_url
     import django_heroku
-    db_from_env = dj_database_url.config(conn_max_age=600)
-    DATABASES['default'].update(db_from_env)
+    # db_from_env = dj_database_url.config(conn_max_age=600)
+    # DATABASES['default'].update(db_from_env)
     ALLOWED_HOSTS = ['*']
     DEBUG = True
 
