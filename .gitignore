@@ -136,3 +136,4 @@ api/tests.py
 
 # Format HTML
 format.html
+api/test.js

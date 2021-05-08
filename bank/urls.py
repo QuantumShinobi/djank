@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('site/', include('server.urls')),
     path('', include('redirect.urls')),
-    # path('api/', include('api.urls')),
+    path('api/', include('api.urls')),
     path('mail/', include('mail.urls'))
 ]
 handler404 = 'redirect.views.error_404'
