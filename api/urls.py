@@ -3,5 +3,5 @@ from django.urls import path
 
 
 urlpatterns = [
-    path('login', BotLoginAPIView.as_view())
+    path('login/', LoginAPIView.as_view(), name="login")
 ]

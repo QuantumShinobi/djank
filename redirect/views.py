@@ -2,6 +2,7 @@ from django.core.exceptions import ValidationError
 from django.http.response import Http404
 from redirect.models import Redirect, RedirectLink
 from django.shortcuts import render, redirect
+from django.urls.exceptions import NoReverseMatch
 from django.http import HttpResponse
 # Create your views here.
 
@@ -116,4 +117,7 @@ def redirect_link(request, id):
     except (AttributeError, RedirectLink.DoesNotExist):
         raise Http404
     else:
-        return redirect(url.link)
+        try:
+            return redirect(url.link)
+        except NoReverseMatch:
+            return render(request, "redirect/close.html")
