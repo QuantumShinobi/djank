@@ -7,7 +7,7 @@
 <div class="row g-1 align-items-center">
 <div class="col-auto">
 <label class="has-text-weight-medium  has-text-centered is-size-5" for="link{{forloop.counter}}">Link {{forloop.counter}}</label>
-<input type="text" placeholder="link{{forloop.counter}}" name="link{{forloop.counter}}" id="link{{forloop.counter}}">
+<input onkeypress="return noenter()"  type="text" placeholder="link{{forloop.counter}}" name="link{{forloop.counter}}" id="link{{forloop.counter}}">
 </div>
 </div>
 </div>
