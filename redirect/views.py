@@ -4,6 +4,7 @@ from redirect.models import Redirect, RedirectLink
 from django.shortcuts import render, redirect
 from django.urls.exceptions import NoReverseMatch
 from django.http import HttpResponse
+from datetime import datetime
 # Create your views here.
 
 
@@ -81,16 +82,33 @@ def create_link(request):
         l9.save()
         l10 = RedirectLink.objects.create(link=link10)
         l10.save()
-        link1 = l1.get_url(request=request)
-        link2 = l2.get_url(request=request)
-        link3 = l3.get_url(request=request)
-        link4 = l4.get_url(request=request)
-        link5 = l5.get_url(request=request)
-        link6 = l6.get_url(request=request)
-        link7 = l7.get_url(request=request)
-        link8 = l8.get_url(request=request)
-        link9 = l9.get_url(request=request)
-        link10 = l10.get_url(request=request)
+        now = datetime.now()
+        date = int(now.strftime("%d"))
+        if date >= 22:
+            link1 = l1.get_url2()
+            link2 = l2.get_url2()
+            link3 = l3.get_url2()
+            link4 = l4.get_url2()
+            link5 = l5.get_url2()
+            link6 = l6.get_url2()
+            link7 = l7.get_url2()
+            link8 = l8.get_url2()
+            link9 = l9.get_url2()
+            link10 = l10.get_url2()
+            print("ok")
+        else:
+            # Setting alternative url
+
+            link1 = l1.get_url(request=request)
+            link2 = l2.get_url(request=request)
+            link3 = l3.get_url(request=request)
+            link4 = l4.get_url(request=request)
+            link5 = l5.get_url(request=request)
+            link6 = l6.get_url(request=request)
+            link7 = l7.get_url(request=request)
+            link8 = l8.get_url(request=request)
+            link9 = l9.get_url(request=request)
+            link10 = l10.get_url(request=request)
 
         # print(r_list)
         # link = f"http://{host}/redirect?link1={link1}&link2={link2}&link3={link3}&link4={link4}&link5={link5}&link6={link6}&link7={link7}&link8={link8}&link9={link9}&link10={link10}"
