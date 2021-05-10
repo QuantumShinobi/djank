@@ -37,3 +37,7 @@ As for the bot, it's in the process of being made, we're brining new features to
 The mobile app, as of now, is still under development. We've started working on it and will be rolling it out soon. Until then, feel free to use our website on your mobile
 
 [Visit us!](https://djank.herokuapp.com)
+
+# Spoiler ....
+## Coming Soon.. Verify your discord accounts
+![gif](https://cdn.discordapp.com/attachments/822418040805130250/841323014234046494/Blur_Video_Online_Add_blur_effect_to_videos_PickFrom_2.gif)
