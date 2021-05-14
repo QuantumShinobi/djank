@@ -21,9 +21,18 @@ class LoginView(View):
             else:
                 code = request.GET.get("code")
                 if code == None:
+                    if request.META['HTTP_HOST'] == "djank.herokuapp.com":
+                        return redirect(real_url)
+                    elif request.META['HTTP_HOST'] == "djank-the-bank.herokuapp.com":
+                        return redirect(alt_url_2)
+
                     return redirect("https://discord.com/api/oauth2/authorize?client_id=833908026267271179&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord%2F&response_type=code&scope=identify")
                 discord_account_details = discord_get_user(request, code)
                 if discord_account_details == None:
+                    if request.META['HTTP_HOST'] == "djank.herokuapp.com":
+                        return redirect(real_url)
+                    elif request.META['HTTP_HOST'] == "djank-the-bank.herokuapp.com":
+                        return redirect(alt_url_2)
                     return redirect("https://discord.com/api/oauth2/authorize?client_id=833908026267271179&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord%2F&response_type=code&scope=identify")
                 if discord_account.discord_username[0:-5] == discord_account_details['username'] or discord_account.is_verified == True:
                     discord_account.discord_id = discord_account_details['id']
@@ -54,17 +63,13 @@ def discord_get_user(request, code: str):
                   }
         response = requests.post(
             "https://discord.com/api/oauth2/token", data=data, headers=header)
-        print(response)
         credentials = response.json()
-        print(credentials)
         access_token = credentials['access_token']
         response = requests.get("https://discord.com/api/v6/users/@me", headers={
 
             "Authorization": f"Bearer {access_token}"
         }, )
-        print(response)
         user = response.json()
-        print(user)
         # avatar_url = f"https://cdn.discordapp.com/avatars/{user['id']}/{user['avatar']}"
         return user
     except KeyError:
