@@ -1,10 +1,11 @@
 from django.core.exceptions import ValidationError
 from django.http.response import Http404
-from redirect.models import Redirect, RedirectLink
+from redirect.models import Redirect, RedirectLink, ProtectLink
 from django.shortcuts import render, redirect
 from django.urls.exceptions import NoReverseMatch
 from django.http import HttpResponse
 from datetime import datetime
+from django.views import View
 # Create your views here.
 
 
@@ -125,8 +126,12 @@ def create_link(request):
             link10=link10,
 
         )
-        link = f"http://{host}/redirect/{new_redirect.unique_id}"
-        return HttpResponse(link)
+        link = f"""http://{host}/redirect/{new_redirect.unique_id}
+        <br>
+        Show link - http://{host}/redirect/show/{new_redirect.unique_id}
+        """
+        return render(request, "redirect/link.html", context={"link1": f"http://{host}/redirect/{new_redirect.unique_id}", "link2": f"http://{host}/redirect/show/{new_redirect.unique_id}"})
+        # return HttpResponse(link)
 
 
 def redirect_link(request, id):
@@ -139,3 +144,43 @@ def redirect_link(request, id):
             return redirect(url.link)
         except NoReverseMatch:
             return render(request, "redirect/close.html")
+
+
+class ProtectLinkView(View):
+    def get(self, request):
+        return render(request, "redirect/protect.html")
+
+    def post(self, request):
+        link = request.POST['link']
+        protected = ProtectLink.objects.create(link=link)
+        return HttpResponse(f"""
+        
+        
+         Link - http://{request.META['HTTP_HOST']}/protect/{protected.id}
+         <br>
+         
+         Password - {protected.password}""")
+
+
+# def see_link(request, id):
+#     p_link = ProtectLink.objects.get(id=id)
+def showlinks(request, id):
+    try:
+        curent_redirect = Redirect.objects.get(unique_id=id)
+    except Redirect.DoesNotExist:
+        raise Http404
+    else:
+        link1 = curent_redirect.link1
+        link2 = curent_redirect.link2
+        link3 = curent_redirect.link3
+        link4 = curent_redirect.link4
+        link5 = curent_redirect.link5
+        link6 = curent_redirect.link6
+        link7 = curent_redirect.link7
+        link8 = curent_redirect.link8
+        link9 = curent_redirect.link9
+        link10 = curent_redirect.link10
+        print(f"link10 - {link10}")
+        link_list = [link1, link2, link3, link4, link5,
+                     link6, link7, link8, link9, link10]
+        return render(request, "redirect/show.html", context={"links": link_list})

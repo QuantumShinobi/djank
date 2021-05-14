@@ -1,3 +1,4 @@
 {
-    "discord.enabled": true
+    "discord.enabled": true,
+    "python.pythonPath": "C:\\Users\\SHALINI\\.virtualenvs\\Djank-oBGvJ5gI\\Scripts\\python.exe"
 }

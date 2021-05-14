@@ -17,7 +17,7 @@ class Query(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
 
     mail = models.EmailField()
-    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"ID - {self.unique_id}\n TIME - {self.time_created}"

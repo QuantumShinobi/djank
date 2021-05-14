@@ -12,7 +12,7 @@ class User(models.Model):
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(null=True)
     email_is_verified = models.BooleanField(default=False)
-    bank_balance = models.IntegerField(default=100)
+    bank_balance = models.BigIntegerField(default=100)
     unique_id = models.UUIDField(
         unique=True, default=uuid.uuid4, editable=False)
     transaction_list = models.CharField(
@@ -137,16 +137,16 @@ class User(models.Model):
 
 
 class Discord_Account(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     discord_username = models.CharField(
         editable=True, max_length=37, default=None, null=False)
     is_verified = models.BooleanField(default=False, null=False, editable=True)
-    discord_id = models.IntegerField(default=None, null=True)
+    discord_id = models.BigIntegerField(default=None, null=True)
 
 
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.IntegerField(null=False, default=100)
+    amount = models.BigIntegerField(null=False, default=100)
     type = models.CharField(max_length=10, choices=(
         ("add", "add"), ("withdraw",  "withdraw")))
     transaction_id = models.UUIDField(

@@ -1,4 +1,5 @@
 import bcrypt
+from .errors import *
 from django.core.exceptions import ValidationError
 from django.http.response import Http404, HttpResponse
 from .discord import *
@@ -168,16 +169,21 @@ def account(request):
             discord_account = Discord_Account.objects.get(user=user)
         except Discord_Account.DoesNotExist:
             if user.email == None:
-                return render(request, "main/account.html", context={"user": user, "warning": "Your email has not been linked, so if you forget your password, you will not be able to reset it."})
+                return render(request, "main/account.html", context={"user": user, "warning": warning})
             elif user.email_is_verified == False:
-                return render(request, "main/account.html", context={"user": user, "warning2": "Your email has not been verified, so if you forget your password, you will not be able to reset it."})
+                return render(request, "main/account.html", context={"user": user, "warning2": warning2})
             else:
                 return render(request, "main/account.html", context={"user": user})
         else:
+
             if user.email == None:
-                return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": "Your email has not been linked, so if you forget your password, you will not be able to reset it."})
+                # if discord_account.is_verified == True:
+                return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning})
+                # elif discord_account.is_verified == False:
+                # return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning, "not_verified":True})
+
             elif user.email_is_verified == False:
-                return render(request, "main/account.html", context={"user": user,  "discord_account": discord_account, "warning2": "Your email has not been verified, so if you forget your password, you will not be able to reset it."})
+                return render(request, "main/account.html", context={"user": user,  "discord_account": discord_account, "warning2": warning2})
             else:
                 return render(request, "main/account.html", context={"user": user, "discord_account": discord_account})
 

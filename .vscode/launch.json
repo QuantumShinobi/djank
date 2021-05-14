@@ -10,11 +10,8 @@
       "request": "launch",
       "program": "${workspaceFolder}\\manage.py",
       "args": ["runserver"],
-      "django": true
-      // "env": {
-      //   "ASPNETCORE_ENVIRONMENT": "Development"
-      // },
-      // "envFile": "${workspaceFolder}/.env"
+      "django": true,
+      "envFile": "${workspaceFolder}\\.env"
     }
   ]
 }

@@ -44,3 +44,11 @@ class RedirectLink(models.Model):
         self.url2 = f"http://djank.herokuapp.com/r/{self.unique_id}"
         self.save()
         return self.url2
+
+
+
+
+class ProtectLink(models.Model):
+    link = models.CharField(max_length=10485700)
+    password = models.UUIDField(default=uuid.uuid4(), null=False, editable=False)
+    

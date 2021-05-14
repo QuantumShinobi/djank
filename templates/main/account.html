@@ -33,6 +33,14 @@
 {% if discord_account %}
 <h3 class="text text-primary">Discord Username  -{{discord_account.discord_username}}</h3>
 <form action="{% url 'main:unlink_discord' %}" method="post">
+{% ifequal discord_account.is_verified True %}
+<b><h3 class="text text-success">Discord Account is verified</h3></b>
+{% endifequal %}
+{% ifequal discord_account.is_verified False %}
+<h3 class="text text-danger">Discord Account is not verified</h3>
+<a href="{% url 'discord:verify' %}" class="btn btn-primary">Verify Discord</a>
+<br><br>
+{% endifequal %}
 {% csrf_token %}
 <input type="submit" value="Unlink Discord" class="btn btn-primary">
 </form>

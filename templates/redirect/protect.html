@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block body %}
+<form action="{% url 'redirect:protect' %}" method="post">
+{% csrf_token %}
+<div class="row g-1 align-items-center">
+<div class="col-auto">
+<label class="has-text-weight-medium  has-text-centered is-size-5" for="link">Link</label>
+<input onkeypress="return noenter()"  type="text" placeholder="link" name="link" id="link" required>
+<br><br><br>
+<button type="submit">Protect</button>
+</div>
+</div>
+</div>
+<br>
+</form>
+{% endblock body %}

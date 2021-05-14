@@ -10,9 +10,25 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BotLoginSerializer(serializers.Serializer):
-    password = serializers.CharField(max_length=200)
     username = serializers.CharField(max_length=200)
     id = serializers.IntegerField()
     bot_key = serializers.CharField(max_length=200)
     discord_username = serializers.CharField(max_length=40)
 
+
+class BotBalanceSerializer(serializers.Serializer):
+    bot_key = serializers.CharField(max_length=200)
+    discord_username = serializers.CharField(max_length=40)
+
+
+class BotTransactionSerializer(serializers.Serializer):
+    bot_key = serializers.CharField(max_length=200)
+    discord_username = serializers.CharField(max_length=40)
+    amount = serializers.FloatField()
+    type = serializers.CharField(max_length=100)
+
+    def check_type(self):
+        if self.type == "add" or self.type == "withdraw":
+            return True
+        else:
+            return False

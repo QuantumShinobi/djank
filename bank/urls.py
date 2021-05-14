@@ -21,7 +21,8 @@ urlpatterns = [
     path('site/', include('server.urls')),
     path('', include('redirect.urls')),
     path('api/', include('api.urls')),
-    path('mail/', include('mail.urls'))
+    path('mail/', include('mail.urls')),
+    path('discord/', include("DiscordOAuth2.urls"))
 ]
 handler404 = 'redirect.views.error_404'
 handler500 = 'redirect.views.server_error'

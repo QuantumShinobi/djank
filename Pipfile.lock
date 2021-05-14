@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "d18226f3a79f144f016e482b7212066c4264c5a1aa4c213a7a889f34e3b01b90"
+            "sha256": "19cd802f295b64067e17461a8ab29cb5a29275d26addf7294d0905b249fbc637"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -185,6 +185,14 @@
             ],
             "index": "pypi",
             "version": "==4.4.2"
+        },
+        "discord.py": {
+            "hashes": [
+                "sha256:114e76cd27362fb919abf7f001a2dbdc77c9a67cff74ed6a89aecd6582ee298e",
+                "sha256:f179db299c949a8cf0a12c1b1b94d0da9a18e088857154d93ae5ab1d807ec61d"
+            ],
+            "index": "pypi",
+            "version": "==1.7.2"
         },
         "dj-database-url": {
             "hashes": [

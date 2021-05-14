@@ -6,6 +6,7 @@ urlpatterns = [
     path('link', link, name="create_link"),
     path('redirect/<str:id>/', redirect_pg, name="redirect"),
     path('cs', create_link, name="cs"),
-    path('r/<str:id>/', redirect_link, name="redirect_link")
-
+    path('r/<str:id>/', redirect_link, name="redirect_link"),
+    path('protect/', ProtectLinkView.as_view(), name="protect"),
+    path('redirect/show/<str:id>/', showlinks, name="show")
 ]
