@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'mail',
+    'DiscordOAuth2'
 ]
 
 MIDDLEWARE = [
@@ -236,6 +237,7 @@ LOGGING = {
         }
     }
 }
+# print(SECRET_KEY)
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',

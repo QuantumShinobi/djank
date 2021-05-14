@@ -1,0 +1,15 @@
+{% extends 'base2.html' %}
+{% block body %}
+
+<script>
+function Copy1(){
+  var copyText = document.getElementById("link1");
+  document.execCommand('copy', "rishit")
+
+}</script>
+
+<a id="link1" href={{link1}} target="_blank" rel="noopener noreferrer">{{link1}}</a>
+&nbsp;
+<a id="link2" href={{link2}} target="_blank" rel="noopener noreferrer">{{link2}}</a>
+
+{% endblock body %}
