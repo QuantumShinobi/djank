@@ -2,6 +2,7 @@
     "_meta": {
         "hash": {
             "sha256": "402ee5ab61ef4b6d2a01d207ce8027e3823ccf42ab5944dcf7ce265433c06fd4"
+
         },
         "pipfile-spec": 6,
         "requires": {
@@ -216,11 +217,11 @@
         },
         "django": {
             "hashes": [
-                "sha256:296d10092561a1cf16100885b935dc56cf09c8ccb114e64004554941677c6342",
-                "sha256:f5c3f1ce2473abf2f35d992c46d5534e53bd3397867689bde28fd29e856b46b7"
+                "sha256:a523d62b7ab2908f551dabc32b99017a86aa7784e32b761708e52be3dce6d35d",
+                "sha256:dc41bf07357f1f4810c1c555b685cb51f780b41e37892d6cc92b89789f2847e1"
             ],
             "index": "pypi",
-            "version": "==3.1.9"
+            "version": "==3.1.12"
         },
         "django-heroku": {
             "hashes": [
@@ -291,6 +292,7 @@
                 "sha256:5cf1176f554abb4fa98cb362aa2b55c500147e4bdbb07e3fda359143e1da0811",
                 "sha256:f41d5ff73c9f5385775d5c0bc13b424535c8402fe70ea8210f93e11f3683993e"
             ],
+            "markers": "python_version >= '3.5'",
             "version": "==0.1.2"
         },
         "maxminddb": {
