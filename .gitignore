@@ -138,3 +138,7 @@ api/tests.py
 format.html
 api/test.js
 test.http
+encrypt.py
+encrypt.djank
+random_string.py
+req.txt
