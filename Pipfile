@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-asgiref = "==3.3.4"
+asgiref = "==3.4.0"
 autopep8 = "==1.5.7"
 dj-database-url = "==0.5.0"
 django-heroku = "==0.3.1"
@@ -27,7 +27,7 @@ chardet = "==4.0.0"
 colorama = "==0.4.4"
 decorator = "==5.0.9"
 idna = "==2.10"
-ipython = "==7.24.1"
+ipython = "==7.25.0"
 jedi = "==0.18.0"
 parso = "==0.8.2"
 pickleshare = "==0.7.5"
