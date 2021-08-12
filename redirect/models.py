@@ -46,9 +46,7 @@ class RedirectLink(models.Model):
         return self.url2
 
 
-
-
 class ProtectLink(models.Model):
     link = models.CharField(max_length=10485700)
-    password = models.UUIDField(default=uuid.uuid4(), null=False, editable=False)
-    
+    password = models.UUIDField(
+        default=uuid.uuid4(), null=False, editable=False)

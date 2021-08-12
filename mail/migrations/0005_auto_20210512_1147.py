@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='query',
             name='user',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='server.user'),
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE, to='server.user'),
         ),
     ]

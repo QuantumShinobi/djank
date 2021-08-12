@@ -16,35 +16,44 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='User',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('username', models.CharField(max_length=25, unique=True)),
                 ('password', models.BinaryField(editable=True)),
                 ('name', models.CharField(max_length=200, null=True)),
                 ('email', models.EmailField(max_length=254, null=True)),
                 ('bank_balance', models.IntegerField(default=100)),
-                ('unique_id', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
-                ('transaction_list', models.CharField(default=None, max_length=10485700, null=True)),
+                ('unique_id', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
+                ('transaction_list', models.CharField(
+                    default=None, max_length=10485700, null=True)),
             ],
         ),
         migrations.CreateModel(
             name='Transaction',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('amount', models.IntegerField(default=100)),
-                ('type', models.CharField(choices=[('add', 'add'), ('withdraw', 'withdraw')], max_length=10)),
-                ('transaction_id', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
+                ('type', models.CharField(choices=[
+                 ('add', 'add'), ('withdraw', 'withdraw')], max_length=10)),
+                ('transaction_id', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
                 ('timestamp', models.DateTimeField(auto_now_add=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='server.user')),
+                ('user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='server.user')),
             ],
         ),
         migrations.CreateModel(
             name='Discord_Account',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('discord_username', models.CharField(default=None, max_length=37)),
                 ('is_verified', models.BooleanField(default=False)),
                 ('discord_id', models.IntegerField(default=None, null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='server.user')),
+                ('user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='server.user')),
             ],
         ),
     ]
