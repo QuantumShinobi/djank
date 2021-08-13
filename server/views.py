@@ -12,7 +12,8 @@ from mail.mail import *
 
 
 class IndexView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             friends = user.get_friends()
@@ -24,7 +25,8 @@ class IndexView(View):
 
 
 class LoginView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         try:
             request.COOKIES['user-identity']
         except KeyError:
@@ -34,7 +36,8 @@ class LoginView(View):
 
 
 class SignedUpView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         try:
             request.COOKIES['user-identity']
         except KeyError:
@@ -75,7 +78,8 @@ class SignedUpView(View):
         else:
             return redirect("main:index")
 
-    def get(self, request):
+    @staticmethod
+    def get(request):
         raise Http404
 
 
@@ -89,7 +93,8 @@ def signup(request):
 
 
 class LoggedInView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         username = request.POST['username']
         password = request.POST['password']
         if User.objects.filter(username=username).exists() == True:
@@ -98,7 +103,8 @@ class LoggedInView(View):
         else:
             return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
 
-    def get(self, request):
+    @staticmethod
+    def get(request):
         raise Http404()
 
 
@@ -244,7 +250,8 @@ def transaction(request, transaction_id):
 
 
 class LinkDiscordView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         user = User.get_user(request=request)
         discord_username = request.POST['username']
         if format_is_correct(discord_username) != "Blank Username" and format_is_correct(discord_username) != None:
@@ -259,7 +266,8 @@ class LinkDiscordView(View):
 
 
 class UnlinkDiscordView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         user = User.get_user(request=request)
 
         try:
@@ -273,7 +281,8 @@ class UnlinkDiscordView(View):
 
 # FRIENDS
 class FriendsView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             return render(request, "main/friends.html", context={"friends": user.get_friends()})
@@ -282,14 +291,16 @@ class FriendsView(View):
 
 
 class AddFriends(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             return render(request, "main/add_friends.html", context={"user": user})
         else:
             return User.get_user(request=request)
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         friend_username = request.POST['friend']
         try:
             friend = User.objects.get(username=friend_username)
@@ -303,10 +314,12 @@ class AddFriends(View):
 
 # Money transferring
 class TransferView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         raise Http404
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         amount = request.POST['amount']
         recipient_username = request.POST['username']
         sender = User.get_user(request=request)
@@ -327,7 +340,8 @@ class TransferView(View):
 
 # Add email
 class AddEmailView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             user.email = None
@@ -337,7 +351,8 @@ class AddEmailView(View):
         else:
             return User.get_user(request=request)
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         email = request.POST['email']
         user = User.get_user(request=request)
         user.email = email

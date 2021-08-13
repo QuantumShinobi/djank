@@ -11,7 +11,8 @@ real_url = "https://discord.com/api/oauth2/authorize?client_id=83390802626727117
 
 
 class LoginView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             try:

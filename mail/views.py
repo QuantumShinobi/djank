@@ -13,11 +13,13 @@ import bcrypt
 
 
 class MailView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         check_if_key_is_valid(Query)
         return render(request, 'mail/index.html')
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         check_if_key_is_valid(Query)
         username = request.POST['username']
         try:
@@ -38,7 +40,8 @@ class MailView(View):
 
 
 class ResetPasswordView(View):
-    def get(self, request, id1, id2):
+    @staticmethod
+    def get(request, id1, id2):
         try:
             id1 = uuid.UUID(id1)
             id2 = uuid.UUID(id2)
@@ -52,7 +55,8 @@ class ResetPasswordView(View):
             else:
                 raise Http404
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         new_pwd = request.POST['new_password']
         username = request.POST['username']
         try:
@@ -73,7 +77,8 @@ class ResetPasswordView(View):
 
 
 class VerifyMail(View):
-    def get(self, request, id):
+    @staticmethod
+    def get(request, id):
         try:
             user = User.objects.get(unique_id=uuid.UUID(id))
         except (User.DoesNotExist):
