@@ -28,8 +28,8 @@ class MailView(View):
             return redirect(f"http://{request.META['HTTP_HOST']}/mail?invalid=true")
         else:
             email = user.email
-            if email != None and email.isspace() == False:
-                if user.email_is_verified == True:
+            if email is not None and email.isspace() is False:
+                if user.email_is_verified is True:
                     id = Query.objects.create(user=user, mail=user.email)
                     send__mail(id, user.email, request, user)
                     return render(request, "mail/sent.html")
@@ -85,7 +85,7 @@ class VerifyMail(View):
             print("UUID NOT FOUND")
             return HttpResponse("NOT FOUND")
         else:
-            if user.email_is_verified == False and user.email.isspace() == False and user.email != "":
+            if user.email_is_verified is False and user.email.isspace() is False and user.email != "":
                 user.email_is_verified = True
                 user.save()
                 return render(request, "mail/verified.html")

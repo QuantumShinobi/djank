@@ -46,7 +46,7 @@ class SignedUpView(View):
             email = request.POST.get('email')
             name = request.POST['name']
             discord_username = request.POST['discord_username']
-            if User.objects.filter(username=username).exists() == True:
+            if User.objects.filter(username=username).exists() is True:
                 return render(request, "main/signup.html", context={'error': "Username has already been taken"})
             else:
                 if len(password) < 8:
@@ -58,15 +58,15 @@ class SignedUpView(View):
                 new_user = User.objects.create(
 
                     username=username, password=hash_pwd, name=name)
-                if email.isspace() == False and email != "":
+                if email.isspace() is False and email != "":
                     new_user.email = email
                     new_user.save()
                 response = render(request, 'main/logout.html',
                                   context={"title": "Sign up", "text": "Creating your account"})
                 response.set_cookie("user-identity", str(new_user.unique_id))
-                if discord_username != "" and discord_username.isspace() == False:
+                if discord_username != "" and discord_username.isspace() is False:
                     check = format_is_correct(discord_username)
-                    if check == None or check == "Blank Username":
+                    if check is None or check == "Blank Username":
                         response.set_cookie(
                             "discord_account", "None")
                     else:
@@ -97,7 +97,7 @@ class LoggedInView(View):
     def post(request):
         username = request.POST['username']
         password = request.POST['password']
-        if User.objects.filter(username=username).exists() == True:
+        if User.objects.filter(username=username).exists() is True:
             user = User.objects.get(username=username)
             return user.authenticate(password, request)
         else:
@@ -174,21 +174,21 @@ def account(request):
         try:
             discord_account = Discord_Account.objects.get(user=user)
         except Discord_Account.DoesNotExist:
-            if user.email == None:
+            if user.email is None:
                 return render(request, "main/account.html", context={"user": user, "warning": warning})
-            elif user.email_is_verified == False:
+            elif user.email_is_verified is False:
                 return render(request, "main/account.html", context={"user": user, "warning2": warning2})
             else:
                 return render(request, "main/account.html", context={"user": user})
         else:
 
-            if user.email == None:
+            if user.email is None:
                 # if discord_account.is_verified == True:
                 return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning})
                 # elif discord_account.is_verified == False:
                 # return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning, "not_verified":True})
 
-            elif user.email_is_verified == False:
+            elif user.email_is_verified is False:
                 return render(request, "main/account.html", context={"user": user,  "discord_account": discord_account, "warning2": warning2})
             else:
                 return render(request, "main/account.html", context={"user": user, "discord_account": discord_account})
@@ -254,7 +254,7 @@ class LinkDiscordView(View):
     def post(request):
         user = User.get_user(request=request)
         discord_username = request.POST['username']
-        if format_is_correct(discord_username) != "Blank Username" and format_is_correct(discord_username) != None:
+        if format_is_correct(discord_username) != "Blank Username" and format_is_correct(discord_username) is not None:
             new_discord_account = Discord_Account.objects.create(
                 discord_username=discord_username, user=user)
             new_discord_account.save()
