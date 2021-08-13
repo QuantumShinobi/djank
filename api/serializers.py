@@ -28,7 +28,4 @@ class BotTransactionSerializer(serializers.Serializer):
     type = serializers.CharField(max_length=100)
 
     def check_type(self):
-        if self.type == "add" or self.type == "withdraw":
-            return True
-        else:
-            return False
+        return bool(self.type == "add" or self.type == "withdraw")
