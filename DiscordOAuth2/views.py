@@ -20,12 +20,12 @@ class LoginView(View):
                 return redirect(f"http://{request.META['HTTP_HOST']}/site/yourAccount?not_linked=true")
             else:
                 code = request.GET.get("code")
-                if code == None:
+                if code is None:
                     return redirect("https://discord.com/api/oauth2/authorize?client_id=833908026267271179&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord%2F&response_type=code&scope=identify")
                 discord_account_details = discord_get_user(request, code)
-                if discord_account_details == None:
+                if discord_account_details is None:
                     return redirect("https://discord.com/api/oauth2/authorize?client_id=833908026267271179&redirect_uri=http%3A%2F%2F127.0.0.1%3A8000%2Fdiscord%2F&response_type=code&scope=identify")
-                if discord_account.discord_username[0:-5] == discord_account_details['username'] or discord_account.is_verified == True:
+                if discord_account.discord_username[0:-5] == discord_account_details['username'] or discord_account.is_verified is True:
                     discord_account.discord_id = discord_account_details['id']
                     discord_account.is_verified = True
                     discord_account.save()
