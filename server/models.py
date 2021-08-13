@@ -26,7 +26,7 @@ class User(models.Model):
         return self.username
 
     def authenticate(self, pwd, request, bot=False):
-        if bot == False:
+        if bot is False:
             if type(self.password) == memoryview:
                 if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password.tobytes()):
 
@@ -47,7 +47,7 @@ class User(models.Model):
                     return response
                 else:
                     return render(request, "main/login.html", context={"error": "Password is incorrect"})
-        elif bot == True:
+        elif bot is True:
             return bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8'))
 
     def transaction(self, new_transaction_created):
