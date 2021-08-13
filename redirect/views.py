@@ -147,10 +147,12 @@ def redirect_link(request, id):
 
 
 class ProtectLinkView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         return render(request, "redirect/protect.html")
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         link = request.POST['link']
         protected = ProtectLink.objects.create(link=link)
         return HttpResponse(f"""
