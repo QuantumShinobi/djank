@@ -14,9 +14,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='ProtectLink',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('link', models.CharField(max_length=10485700)),
-                ('password', models.UUIDField(default=uuid.UUID('9c055c66-c8b4-468a-910a-18f97e1fef80'), editable=False)),
+                ('password', models.UUIDField(default=uuid.UUID(
+                    '9c055c66-c8b4-468a-910a-18f97e1fef80'), editable=False)),
             ],
         ),
     ]

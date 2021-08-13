@@ -15,9 +15,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Redirect',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('link_list', models.CharField(max_length=10485700)),
-                ('unique_id', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
+                ('unique_id', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
             ],
         ),
     ]

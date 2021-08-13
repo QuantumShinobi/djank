@@ -17,11 +17,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Query',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('unique_id', models.UUIDField(default=uuid.uuid4, editable=False, unique=True)),
+                ('id', models.AutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('unique_id', models.UUIDField(
+                    default=uuid.uuid4, editable=False, unique=True)),
                 ('time_created', models.DateTimeField(auto_now_add=True)),
                 ('mail', models.EmailField(max_length=254)),
-                ('djank_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='server.user')),
+                ('djank_user', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE, to='server.user')),
             ],
         ),
     ]
