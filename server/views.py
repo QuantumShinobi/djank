@@ -184,7 +184,6 @@ def account(request):
                 # elif discord_account.is_verified == False:
                 # return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning, "not_verified":True})
 
-
             if user.email_is_verified == False:
 
                 return render(request, "main/account.html", context={"user": user,  "discord_account": discord_account, "warning2": warning2})
