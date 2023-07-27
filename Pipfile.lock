@@ -1,7 +1,9 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b1c306af5851d4da0aa0779d400e0ed726b136769afda22b4633507b946dee17"
+
+            "sha256": "7ecda79d7218be8dc69f36934e34551c6c2e8f70dcde4de22fc344b3771f23a7"
+
         },
         "pipfile-spec": 6,
         "requires": {
@@ -208,7 +210,6 @@
         },
         "discord.py": {
             "hashes": [
-
                 "sha256:309146476e986cb8faf038cd5d604d4b3834ef15c2d34df697ce5064bf5cd779",
                 "sha256:aeb186348bf011708b085b2715cf92bbb72c692eb4f59c4c0b488130cc4c4b7e"
             ],
@@ -503,12 +504,11 @@
         "setuptools": {
             "hashes": [
 
-                "sha256:2e24e0bec025f035a2e72cdd1961119f557d78ad331bb00ff82efb2ab8da8e82",
-                "sha256:7732871f4f7fa58fb6bdcaeadb0161b2bd046c85905dbaa066bdcbcc81953b57"
+                "sha256:a8f6e213b4b0661f590ccf40de95d28a177cd747d098624ad3f69c40287297e9",
+                "sha256:c2d2709550f15aab6c9110196ea312f468f41cd546bceb24127a1be6fdcaeeb1"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==65.3.0"
-
+            "version": "==65.4.0"
         },
         "six": {
             "hashes": [
@@ -520,11 +520,11 @@
         },
         "sqlparse": {
             "hashes": [
-                "sha256:017cde379adbd6a1f15a61873f43e8274179378e95ef3fede90b5aa64d304ed0",
-                "sha256:0f91fd2e829c44362cbcfab3e9ae12e22badaa8a29ad5ff599f9ec109f0454e8"
+                "sha256:0323c0ec29cd52bceabc1b4d9d579e311f3e4961b98d174201d5622a23b85e34",
+                "sha256:69ca804846bb114d2ec380e4360a8a340db83f0ccf3afceeb1404df028f57268"
             ],
             "index": "pypi",
-            "version": "==0.4.1"
+            "version": "==0.4.3"
         },
         "toml": {
             "hashes": [
