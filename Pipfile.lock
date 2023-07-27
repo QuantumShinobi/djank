@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cf988dcde23a92833f3b92e5f60fc8d9411f2e0e2192d1f3cd93fda66653ae10"
+            "sha256": "b1c306af5851d4da0aa0779d400e0ed726b136769afda22b4633507b946dee17"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -208,11 +208,12 @@
         },
         "discord.py": {
             "hashes": [
-                "sha256:8258b7af641c532e9e33e186c7b867d9ff5575fe63a460b17ed55bd4fe082200",
-                "sha256:b99fbf4ad74f007c680f33f5174738858146c99a2bc4f6d0e08ddbf93bc12c4d"
+
+                "sha256:309146476e986cb8faf038cd5d604d4b3834ef15c2d34df697ce5064bf5cd779",
+                "sha256:aeb186348bf011708b085b2715cf92bbb72c692eb4f59c4c0b488130cc4c4b7e"
             ],
             "index": "pypi",
-            "version": "==2.1.1"
+            "version": "==2.0.1"
         },
         "dj-database-url": {
             "hashes": [
@@ -264,11 +265,11 @@
         },
         "idna": {
             "hashes": [
-                "sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6",
-                "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"
+                "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4",
+                "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"
             ],
             "index": "pypi",
-            "version": "==2.10"
+            "version": "==3.4"
         },
         "ipython": {
             "hashes": [
@@ -501,11 +502,13 @@
         },
         "setuptools": {
             "hashes": [
-                "sha256:95f00380ef2ffa41d9bba85d95b27689d923c93dfbafed4aecd7cf988a25e012",
-                "sha256:bb6d8e508de562768f2027902929f8523932fcd1fb784e6d573d2cafac995a48"
+
+                "sha256:2e24e0bec025f035a2e72cdd1961119f557d78ad331bb00ff82efb2ab8da8e82",
+                "sha256:7732871f4f7fa58fb6bdcaeadb0161b2bd046c85905dbaa066bdcbcc81953b57"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==67.3.2"
+            "version": "==65.3.0"
+
         },
         "six": {
             "hashes": [
