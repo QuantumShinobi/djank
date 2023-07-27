@@ -46,8 +46,8 @@ class User(models.Model):
                     return response
 
         elif bot == True:
-                else:
-                    return render(request, "main/login.html", context={"error": "Password is incorrect"})
+            else:
+                return render(request, "main/login.html", context={"error": "Password is incorrect"})
         elif bot is True:
 
             return bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8'))
