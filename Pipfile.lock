@@ -1,7 +1,8 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e74ad58d7b3f0fb04f070e0364ec52703e1ef393f2051c7bba24d6600100d5b4"
+
+            "sha256": "4dbbd1c79d5764984d4abb086c501765ac66a9948ef68c9eb033da5f34d8422a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -220,6 +221,7 @@
             ],
             "index": "pypi",
             "version": "==2.3.1"
+
         },
         "dj-database-url": {
             "hashes": [
@@ -392,11 +394,11 @@
         },
         "prompt-toolkit": {
             "hashes": [
-                "sha256:08360ee3a3148bdb5163621709ee322ec34fc4375099afa4bbf751e9b7b7fa4f",
-                "sha256:7089d8d2938043508aa9420ec18ce0922885304cddae87fb96eebca942299f88"
+                "sha256:23ac5d50538a9a38c8bde05fecb47d0b403ecd0662857a86f886f798563d5b9b",
+                "sha256:45ea77a2f7c60418850331366c81cf6b5b9cf4c7fd34616f733c5427e6abbb1f"
             ],
             "index": "pypi",
-            "version": "==3.0.19"
+            "version": "==3.0.38"
         },
         "psycopg2": {
             "hashes": [
@@ -522,12 +524,12 @@
         },
         "setuptools": {
             "hashes": [
-
                 "sha256:11e52c67415a381d10d6b462ced9cfb97066179f0e871399e006c4ab101fc85f",
                 "sha256:baf1fdb41c6da4cd2eae722e135500da913332ab3f2f5c7d33af9b492acb5235"
             ],
             "markers": "python_version >= '3.7'",
             "version": "==68.0.0"
+
         },
         "six": {
             "hashes": [
