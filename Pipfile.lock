@@ -1,8 +1,7 @@
 {
     "_meta": {
         "hash": {
-
-            "sha256": "4dbbd1c79d5764984d4abb086c501765ac66a9948ef68c9eb033da5f34d8422a"
+            "sha256": "432f216c681d57ac40a62cacfa626eb0e6a96d1e8b38671fd6ee59739efb40ab"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -221,7 +220,6 @@
             ],
             "index": "pypi",
             "version": "==2.3.1"
-
         },
         "dj-database-url": {
             "hashes": [
@@ -304,11 +302,11 @@
         },
         "jedi": {
             "hashes": [
-                "sha256:18456d83f65f400ab0c2d3319e48520420ef43b23a086fdc05dff34132f0fb93",
-                "sha256:92550a404bad8afed881a137ec9a461fed49eca661414be45059329614ed0707"
+                "sha256:203c1fd9d969ab8f2119ec0a3342e0b49910045abe6af0a3ae83a5764d54639e",
+                "sha256:bae794c30d07f6d910d32a7048af09b5a39ed740918da923c6b780790ebac612"
             ],
             "index": "pypi",
-            "version": "==0.18.0"
+            "version": "==0.18.2"
         },
         "matplotlib-inline": {
             "hashes": [
@@ -529,7 +527,6 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==68.0.0"
-
         },
         "six": {
             "hashes": [
