@@ -18,51 +18,61 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='redirect',
             name='link10',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link2',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link3',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link4',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link5',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link6',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link7',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link8',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='redirect',
             name='link9',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AlterField(
             model_name='redirect',
             name='id',
-            field=models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
+            field=models.BigAutoField(
+                auto_created=True, primary_key=True, serialize=False, verbose_name='ID'),
         ),
     ]

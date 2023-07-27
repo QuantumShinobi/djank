@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='friends_list',
-            field=models.CharField(default=None, max_length=10485700, null=True),
+            field=models.CharField(
+                default=None, max_length=10485700, null=True),
         ),
         migrations.AddField(
             model_name='user',

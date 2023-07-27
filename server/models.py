@@ -26,7 +26,7 @@ class User(models.Model):
         return self.username
 
     def authenticate(self, pwd, request, bot=False):
-        if bot == False:
+        if bot is False:
             if type(self.password) == memoryview:
                 if bcrypt.checkpw(bytes(pwd, 'utf-8'), self.password.tobytes()):
 
@@ -44,8 +44,12 @@ class User(models.Model):
                                                "text": "Logging you in"})
                     response.set_cookie("user-identity", str(self.unique_id))
                     return response
-                return render(request, "main/login.html", context={"error": "Password is incorrect"})
+
         elif bot == True:
+                else:
+                    return render(request, "main/login.html", context={"error": "Password is incorrect"})
+        elif bot is True:
+
             return bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8'))
 
     def transaction(self, new_transaction_created):
@@ -61,7 +65,8 @@ class User(models.Model):
         new_transaction_created.save()
         return True
 
-    def get_user(self=None, request=None):
+    @staticmethod
+    def get_user(request=None):
         try:
             request.COOKIES['user-identity']
         except (KeyError, AttributeError):
@@ -110,7 +115,8 @@ class User(models.Model):
             self.save()
             return True
 
-    def logout(self=None, request=None):
+    @staticmethod
+    def logout(request=None):
         try:
             request.COOKIES['user-identity']
         except KeyError:

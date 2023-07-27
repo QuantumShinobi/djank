@@ -30,7 +30,7 @@ class LoginAPIView(APIView):
                             user=user)
                     except Discord_Account.DoesNotExist:
                         return Response(status=status.HTTP_403_FORBIDDEN, data={"error": "Not linked"})
-                    if discord_account.is_verified == False:
+                    if discord_account.is_verified is False:
                         return Response(status=status.HTTP_403_FORBIDDEN, data={"error": "Account not verified"})
                     return Response(status=status.HTTP_200_OK, data=UserSerializer(user).data)
 

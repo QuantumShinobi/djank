@@ -12,7 +12,8 @@ from mail.mail import *
 
 
 class IndexView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             friends = user.get_friends()
@@ -23,7 +24,8 @@ class IndexView(View):
 
 
 class LoginView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         try:
             request.COOKIES['user-identity']
         except KeyError:
@@ -33,7 +35,8 @@ class LoginView(View):
 
 
 class SignedUpView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         try:
             request.COOKIES['user-identity']
         except KeyError:
@@ -42,38 +45,42 @@ class SignedUpView(View):
             email = request.POST.get('email')
             name = request.POST['name']
             discord_username = request.POST['discord_username']
-            if User.objects.filter(username=username).exists() == True:
+            if User.objects.filter(username=username).exists() is True:
                 return render(request, "main/signup.html", context={'error': "Username has already been taken"})
-            if len(password) < 8:
-                return render(request, "main/signup.html", context={'error': "Password should be atleast 8 characters long"})
-            hash_pwd = bcrypt.hashpw(
-                bytes(password, 'utf-8'), bcrypt.gensalt())
-            name = name.capitalize()
 
-            new_user = User.objects.create(
+            else:
+                if len(password) < 8:
+                    return render(request, "main/signup.html", context={'error': "Password should be atleast 8 characters long"})
+                hash_pwd = bcrypt.hashpw(
+                    bytes(password, 'utf-8'), bcrypt.gensalt())
+                name = name.capitalize()
 
-                username=username, password=hash_pwd, name=name)
-            if email.isspace() == False and email != "":
-                new_user.email = email
-                new_user.save()
-            response = render(request, 'main/logout.html',
-                              context={"title": "Sign up", "text": "Creating your account"})
-            response.set_cookie("user-identity", str(new_user.unique_id))
-            if discord_username != "" and discord_username.isspace() == False:
-                check = format_is_correct(discord_username)
-                if check == None or check == "Blank Username":
-                    response.set_cookie(
-                        "discord_account", "None")
-                else:
-                    response.set_cookie(
-                        "discord_account", "True")
-                    new_discord_ac = Discord_Account.objects.create(
-                        user=new_user, discord_username=discord_username)
-            return response
+                new_user = User.objects.create(
+
+                    username=username, password=hash_pwd, name=name)
+                if email.isspace() is False and email != "":
+                    new_user.email = email
+                    new_user.save()
+                response = render(request, 'main/logout.html',
+                                  context={"title": "Sign up", "text": "Creating your account"})
+                response.set_cookie("user-identity", str(new_user.unique_id))
+                if discord_username != "" and discord_username.isspace() is False:
+                    check = format_is_correct(discord_username)
+                    if check is None or check == "Blank Username":
+                        response.set_cookie(
+                            "discord_account", "None")
+                    else:
+                        response.set_cookie(
+                            "discord_account", "True")
+                        new_discord_ac = Discord_Account.objects.create(
+                            user=new_user, discord_username=discord_username)
+                return response
+
         else:
             return redirect("main:index")
 
-    def get(self, request):
+    @staticmethod
+    def get(request):
         raise Http404
 
 
@@ -87,15 +94,17 @@ def signup(request):
 
 
 class LoggedInView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         username = request.POST['username']
         password = request.POST['password']
-        if User.objects.filter(username=username).exists() == True:
+        if User.objects.filter(username=username).exists() is True:
             user = User.objects.get(username=username)
             return user.authenticate(password, request)
         return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
 
-    def get(self, request):
+    @staticmethod
+    def get(request):
         raise Http404()
 
 
@@ -161,20 +170,23 @@ def account(request):
         try:
             discord_account = Discord_Account.objects.get(user=user)
         except Discord_Account.DoesNotExist:
-            if user.email == None:
+            if user.email is None:
                 return render(request, "main/account.html", context={"user": user, "warning": warning})
+
             if user.email_is_verified == False:
                 return render(request, "main/account.html", context={"user": user, "warning2": warning2})
             return render(request, "main/account.html", context={"user": user})
         else:
 
-            if user.email == None:
+            if user.email is None:
                 # if discord_account.is_verified == True:
                 return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning})
                 # elif discord_account.is_verified == False:
                 # return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning, "not_verified":True})
 
+
             if user.email_is_verified == False:
+
                 return render(request, "main/account.html", context={"user": user,  "discord_account": discord_account, "warning2": warning2})
             return render(request, "main/account.html", context={"user": user, "discord_account": discord_account})
 
@@ -233,10 +245,11 @@ def transaction(request, transaction_id):
 
 
 class LinkDiscordView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         user = User.get_user(request=request)
         discord_username = request.POST['username']
-        if format_is_correct(discord_username) != "Blank Username" and format_is_correct(discord_username) != None:
+        if format_is_correct(discord_username) != "Blank Username" and format_is_correct(discord_username) is not None:
             new_discord_account = Discord_Account.objects.create(
                 discord_username=discord_username, user=user)
             new_discord_account.save()
@@ -247,7 +260,8 @@ class LinkDiscordView(View):
 
 
 class UnlinkDiscordView(View):
-    def post(self, request):
+    @staticmethod
+    def post(request):
         user = User.get_user(request=request)
 
         try:
@@ -261,7 +275,8 @@ class UnlinkDiscordView(View):
 
 # FRIENDS
 class FriendsView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             return render(request, "main/friends.html", context={"friends": user.get_friends()})
@@ -269,13 +284,15 @@ class FriendsView(View):
 
 
 class AddFriends(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             return render(request, "main/add_friends.html", context={"user": user})
         return User.get_user(request=request)
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         friend_username = request.POST['friend']
         try:
             friend = User.objects.get(username=friend_username)
@@ -289,10 +306,12 @@ class AddFriends(View):
 
 # Money transferring
 class TransferView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         raise Http404
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         amount = request.POST['amount']
         recipient_username = request.POST['username']
         sender = User.get_user(request=request)
@@ -313,7 +332,8 @@ class TransferView(View):
 
 # Add email
 class AddEmailView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             user.email = None
@@ -322,7 +342,8 @@ class AddEmailView(View):
             return redirect("main:account")
         return User.get_user(request=request)
 
-    def post(self, request):
+    @staticmethod
+    def post(request):
         email = request.POST['email']
         user = User.get_user(request=request)
         user.email = email

@@ -2,7 +2,6 @@ from django.db import models
 
 # Create your models here.
 from datetime import datetime, timezone
-from django.db import models
 from server.models import User
 import uuid
 # Create your models here.
