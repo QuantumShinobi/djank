@@ -20,8 +20,7 @@ class IndexView(View):
             # if user.warned_email == False and user.email:
 
             return render(request, 'main/index.html', context={"user": user, "friends": friends})
-        else:
-            return User.get_user(request=request)
+        return User.get_user(request=request)
 
 
 class LoginView(View):
@@ -48,6 +47,7 @@ class SignedUpView(View):
             discord_username = request.POST['discord_username']
             if User.objects.filter(username=username).exists() is True:
                 return render(request, "main/signup.html", context={'error': "Username has already been taken"})
+
             else:
                 if len(password) < 8:
                     return render(request, "main/signup.html", context={'error': "Password should be atleast 8 characters long"})
@@ -75,6 +75,7 @@ class SignedUpView(View):
                         new_discord_ac = Discord_Account.objects.create(
                             user=new_user, discord_username=discord_username)
                 return response
+
         else:
             return redirect("main:index")
 
@@ -100,8 +101,7 @@ class LoggedInView(View):
         if User.objects.filter(username=username).exists() is True:
             user = User.objects.get(username=username)
             return user.authenticate(password, request)
-        else:
-            return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
+        return render(request, "main/login.html", context={'error': "There is no account associated with this username"})
 
     @staticmethod
     def get(request):
@@ -126,8 +126,7 @@ def add(request):
         except ValueError:
             return render(request, "error.html", context={"error": "How can u add a non-number field to your bank balance ?"})
         return redirect("main:index")
-    else:
-        return render(request, "error.html", context={"error": "Access Denied"})
+    return render(request, "error.html", context={"error": "Access Denied"})
 
 
 def withdraw(request):
@@ -142,15 +141,13 @@ def withdraw(request):
 
         if int(money_to_withdraw) > user.bank_balance:
             return render(request, "error.html", context={"error": "How can your withdraw amount be greater than your bank balance"})
-        else:
-            user.bank_balance -= int(money_to_withdraw)
-            user.save()
-            new_transaction_created = Transaction(
-                user=user, amount=money_to_withdraw, type="withdraw")
-            user.transaction(new_transaction_created)
+        user.bank_balance -= int(money_to_withdraw)
+        user.save()
+        new_transaction_created = Transaction(
+            user=user, amount=money_to_withdraw, type="withdraw")
+        user.transaction(new_transaction_created)
         return redirect("main:index")
-    else:
-        return render(request, "error.html", context={"error": "Access Denied"})
+    return render(request, "error.html", context={"error": "Access Denied"})
 
 
 def del_account(request):
@@ -162,8 +159,7 @@ def del_account(request):
                          context={"text": "Deleting your account"})
             res.delete_cookie("user-identity")
             return res
-        else:
-            return User.get_user(request=request)
+        return User.get_user(request=request)
     else:
         return HttpResponse("ACCESS DENIED")
 
@@ -176,10 +172,10 @@ def account(request):
         except Discord_Account.DoesNotExist:
             if user.email is None:
                 return render(request, "main/account.html", context={"user": user, "warning": warning})
-            elif user.email_is_verified is False:
+
+            if user.email_is_verified == False:
                 return render(request, "main/account.html", context={"user": user, "warning2": warning2})
-            else:
-                return render(request, "main/account.html", context={"user": user})
+            return render(request, "main/account.html", context={"user": user})
         else:
 
             if user.email is None:
@@ -188,10 +184,11 @@ def account(request):
                 # elif discord_account.is_verified == False:
                 # return render(request, "main/account.html", context={"user": user, "discord_account": discord_account, "warning": warning, "not_verified":True})
 
-            elif user.email_is_verified is False:
+
+            if user.email_is_verified == False:
+
                 return render(request, "main/account.html", context={"user": user,  "discord_account": discord_account, "warning2": warning2})
-            else:
-                return render(request, "main/account.html", context={"user": user, "discord_account": discord_account})
+            return render(request, "main/account.html", context={"user": user, "discord_account": discord_account})
 
     else:
         return User.get_user(request)
@@ -202,7 +199,7 @@ def change_pwd(request):
         user = User.get_user(request=request)
         if request.method == "GET":
             return HttpResponse("Access Denied")
-        elif request.method == "POST":
+        if request.method == "POST":
             pwd = request.POST['password']
             hash_pwd = bcrypt.hashpw(
                 bytes(pwd, 'utf-8'), bcrypt.gensalt())
@@ -224,8 +221,7 @@ def transaction_list(request):
         except TypeError:
             return render(request, "main/transactions.html", context={"no_t": "You have no transactions"})
         return render(request, "main/transactions.html", context={"transactions": transaction_list, "host": request.META['HTTP_HOST']})
-    else:
-        return User.get_user(request=request)
+    return User.get_user(request=request)
 
 
 def delete_transaction_history(request):
@@ -236,8 +232,7 @@ def delete_transaction_history(request):
             user.save()
             host = request.META['HTTP_HOST']
             return redirect(f"http://{host}/site/yourAccount?t_list_erase=true")
-        else:
-            return HttpResponse("Access Denied")
+        return HttpResponse("Access Denied")
 
 
 def transaction(request, transaction_id):
@@ -260,9 +255,8 @@ class LinkDiscordView(View):
             new_discord_account.save()
             host = request.META['HTTP_HOST']
             return redirect(f"http://{host}/site/yourAccount?discord_account_linked=true")
-        else:
-            host = request.META['HTTP_HOST']
-            return redirect(f"http://{host}/site/yourAccount?format_incorrect=true")
+        host = request.META['HTTP_HOST']
+        return redirect(f"http://{host}/site/yourAccount?format_incorrect=true")
 
 
 class UnlinkDiscordView(View):
@@ -286,8 +280,7 @@ class FriendsView(View):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             return render(request, "main/friends.html", context={"friends": user.get_friends()})
-        else:
-            return User.get_user(request=request)
+        return User.get_user(request=request)
 
 
 class AddFriends(View):
@@ -296,8 +289,7 @@ class AddFriends(View):
         if isinstance(User.get_user(request=request), User):
             user = User.get_user(request=request)
             return render(request, "main/add_friends.html", context={"user": user})
-        else:
-            return User.get_user(request=request)
+        return User.get_user(request=request)
 
     @staticmethod
     def post(request):
@@ -348,8 +340,7 @@ class AddEmailView(View):
             user.email_is_verified = False
             user.save()
             return redirect("main:account")
-        else:
-            return User.get_user(request=request)
+        return User.get_user(request=request)
 
     @staticmethod
     def post(request):
