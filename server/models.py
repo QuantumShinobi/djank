@@ -3,7 +3,6 @@ import uuid
 import bcrypt
 from django.shortcuts import render, redirect
 import json
-from bank.settings import MODE
 
 
 class User(models.Model):
@@ -46,10 +45,8 @@ class User(models.Model):
                     return response
 
         elif bot == True:
-            else:
-                return render(request, "main/login.html", context={"error": "Password is incorrect"})
+            return render(request, "main/login.html", context={"error": "Password is incorrect"})
         elif bot is True:
-
             return bcrypt.checkpw(bytes(pwd, 'utf-8'), bytes(self.password, 'utf-8'))
 
     def transaction(self, new_transaction_created):
