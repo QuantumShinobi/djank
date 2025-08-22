@@ -6,15 +6,92 @@
 <div id="non-animation" class="min-h-screen bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <!-- Alerts -->
-        <div class="fixed top-4 right-4 z-50 space-y-4">
-            <div style="display:none;" class="alert-modern bg-red-100 border-l-4 border-red-500 text-red-700 p-4" id="amount_less">
-                The amount for transfer is less than your bank balance
+        <div class="fixed top-4 right-4 z-50 space-y-4 w-full max-w-sm">
+            <!-- Error Alert -->
+            <div id="amount_less" style="display:none;" class="bg-red-50 p-4 rounded-lg shadow-md">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-red-800">
+                            Transaction Failed
+                        </p>
+                        <p class="mt-1 text-sm text-red-700">
+                            The amount for transfer is less than your bank balance.
+                        </p>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <div class="-mx-1.5 -my-1.5">
+                            <button onclick="this.closest('#amount_less').style.display = 'none';" class="inline-flex bg-red-50 rounded-md p-1.5 text-red-500 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-50 focus:ring-red-600">
+                                <span class="sr-only">Dismiss</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="display:none;" class="alert-modern bg-green-100 border-l-4 border-green-500 text-green-700 p-4" id="transferred">
-                Your transfer has been completed
+
+            <!-- Success Alert: Transferred -->
+            <div id="transferred" style="display:none;" class="bg-green-50 p-4 rounded-lg shadow-md">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-green-800">
+                            Success
+                        </p>
+                        <p class="mt-1 text-sm text-green-700">
+                            Your transfer has been completed.
+                        </p>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <div class="-mx-1.5 -my-1.5">
+                            <button onclick="this.closest('#transferred').style.display = 'none';" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
+                                <span class="sr-only">Dismiss</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="display:none;" class="alert-modern bg-green-100 border-l-4 border-green-500 text-green-700 p-4" id="email_added">
-                Your email was added and verification sent
+
+            <!-- Success Alert: Email Added -->
+            <div id="email_added" style="display:none;" class="bg-green-50 p-4 rounded-lg shadow-md">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-green-800">
+                            Success
+                        </p>
+                        <p class="mt-1 text-sm text-green-700">
+                            Your email was added and verification sent.
+                        </p>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <div class="-mx-1.5 -my-1.5">
+                            <button onclick="this.closest('#email_added').style.display = 'none';" class="inline-flex bg-green-50 rounded-md p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-green-50 focus:ring-green-600">
+                                <span class="sr-only">Dismiss</span>
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -218,31 +295,64 @@
             </div>
         </div>
 
-        <div style="display:none;" id="transfer" class="bg-white rounded-xl shadow-lg p-6">
-            <form id="transfer_form" action="{% url 'main:transfer' %}" method="post">
+        <div style="display:none;" id="transfer" class="bg-white rounded-2xl shadow-lg p-8 max-w-md mx-auto">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Transfer Money</h2>
+                <p class="text-gray-600">Send money to a friend</p>
+            </div>
+            <form id="transfer_form" action="{% url 'main:transfer' %}" method="post" class="space-y-6">
                 {% csrf_token %}
-                <div class="row g-1 align-items-center">
-                    <div class="col-auto">
-                        <b><label class="font-bold text-center text-lg" for="amount">Amount to transfer</label></b>
-                        <input onkeypress="return noenter()" class="form-control" type="text" placeholder="Amount to transfer" name="amount" id="amount" required>
-                        <br>
-                        <select class="form-select form-select-lg mb-3" name="username" id="username">
+                <div class="space-y-4">
+                    <div>
+                        <label for="amount" class="block text-sm font-medium text-gray-700 mb-2">Amount to Transfer</label>
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">$</span>
+                            </div>
+                            <input
+                                type="text"
+                                name="amount"
+                                id="amount"
+                                autocomplete="off"
+                                onkeypress="return noenter()"
+                                required
+                                class="block w-full pl-7 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                                placeholder="0.00"
+                            >
+                        </div>
+                    </div>
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Recipient</label>
+                        <select
+                            name="username"
+                            id="username"
+                            class="block w-full py-3 px-4 border border-gray-300 bg-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        >
                             {% for friend in friends %}
                             <option value="{{friend.username}}">{{friend.username}}</option>
                             {% endfor %}
                         </select>
-                        <br>
-                        <br>
-                        <button type="submit" class="btn btn-primary" id="transfer_btn" />
-                        Transfer money
-                        </span>
                     </div>
+                    <button
+                        type="submit"
+                        id="transfer_btn"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300"
+                    >
+                        Transfer Money
+                    </button>
                 </div>
-                <br>
             </form>
-            <button class="btn btn-primary" onclick="back()">
-                Go back
-            </button>
+            <div class="mt-6">
+                <button
+                    onclick="back()"
+                    class="w-full flex justify-center items-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300"
+                >
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    Return to Dashboard
+                </button>
+            </div>
         </div>
 
         <!-- Delete Account Modal -->
